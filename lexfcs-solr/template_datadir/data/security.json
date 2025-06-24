@@ -1,0 +1,20 @@
+{
+   "authentication": {
+      "class": "solr.BasicAuthPlugin",
+      "credentials": {
+         "fcs_setup": "56vqw4koAvySQu6Cl2XJelwILnStC31KZLHJ70N5af0= 0HNpGVhZaqHT05eH8/NJ/hBpEcx3xesQW5OB+POQEQg="
+      }
+   },
+   "authorization": {
+      "class": "solr.RuleBasedAuthorizationPlugin",
+      "permissions": [
+         {
+            "name": "security-edit",
+            "role": "admin"
+         }
+      ],
+      "user-role": {
+         "fcs_setup": "admin"
+      }
+   }
+}

@@ -1,0 +1,29 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CQLConversionTest",
+      "request": "launch",
+      "mainClass": "de.saw_leipzig.textplus.webservices.fcs.lexfcs_solr_endpoint.query.CQLConversionTest",
+      "projectName": "webservices.fcs.lexfcs_solr_endpoint"
+    },
+    {
+      "type": "java",
+      "name": "LexCQLConversionTest",
+      "request": "launch",
+      "mainClass": "de.saw_leipzig.textplus.webservices.fcs.lexfcs_solr_endpoint.query.LexCQLConversionTest",
+      "projectName": "webservices.fcs.lexfcs_solr_endpoint"
+    },
+    {
+      "type": "java",
+      "name": "Attach to Remote Program",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": "5005"
+    }
+  ]
+}

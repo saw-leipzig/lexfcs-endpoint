@@ -1,0 +1,11 @@
+services:
+  endpoint:
+    build: .
+    container_name: fcs_solr_endpoint
+    env_file: .env
+    environment:
+      - SOLR_URL
+      - DEFAULT_RESOURCE_PID
+      - SOLR_USER
+      - SOLR_PASSWORD
+      - FCS_RESOURCES_FROM_FCREPO

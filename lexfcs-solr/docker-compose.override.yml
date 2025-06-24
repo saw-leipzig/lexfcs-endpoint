@@ -1,0 +1,17 @@
+services:
+  solr:
+    container_name: lexfcs-solr
+    ports:
+      - "127.0.0.1:8983:8983"  # is only accessible via docker network
+      #- "0.0.0.0:8984:8983" # to make it accessible anywhere, for testing
+    networks:
+      - lexfcs-solr-nw
+    volumes:
+      - ./data:/var/solr
+
+volumes:
+  data:
+
+networks:
+  lexfcs-solr-nw:
+    name: lexfcs-solr-nw

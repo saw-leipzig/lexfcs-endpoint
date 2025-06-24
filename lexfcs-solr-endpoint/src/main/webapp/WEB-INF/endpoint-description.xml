@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EndpointDescription xmlns="http://clarin.eu/fcs/endpoint-description"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://clarin.eu/fcs/endpoint-description ../../resources/Endpoint-Description.xsd"
+    version="2">
+    <Capabilities>
+        <Capability>http://clarin.eu/fcs/capability/basic-search</Capability>
+        <Capability>http://clarin.eu/fcs/capability/lex-search</Capability>
+    </Capabilities>
+    <SupportedDataViews>
+        <SupportedDataView id="hits" delivery-policy="send-by-default">application/x-clarin-fcs-hits+xml</SupportedDataView>
+        <SupportedDataView id="lex" delivery-policy="send-by-default">application/x-clarin-fcs-lex+xml</SupportedDataView>
+    </SupportedDataViews>
+    <SupportedLexFields>
+        <!-- virtual field, describing the entry's language -->
+        <SupportedLexField id="lang">lang</SupportedLexField>
+        <!-- lex value field types -->
+        <SupportedLexField id="entryId">entryId</SupportedLexField>
+        <SupportedLexField id="lemma">lemma</SupportedLexField>
+        <SupportedLexField id="translation">translation</SupportedLexField>
+        <SupportedLexField id="transcription">transcription</SupportedLexField>
+        <SupportedLexField id="phonetic">phonetic</SupportedLexField>
+        <SupportedLexField id="definition">definition</SupportedLexField>
+        <SupportedLexField id="etymology">etymology</SupportedLexField>
+        <SupportedLexField id="case">case</SupportedLexField>
+        <SupportedLexField id="number">number</SupportedLexField>
+        <SupportedLexField id="gender">gender</SupportedLexField>
+        <SupportedLexField id="pos">pos</SupportedLexField>
+        <SupportedLexField id="baseform">baseform</SupportedLexField>
+        <SupportedLexField id="segmentation">segmentation</SupportedLexField>
+        <SupportedLexField id="sentiment">sentiment</SupportedLexField>
+        <SupportedLexField id="frequency">frequency</SupportedLexField>
+        <SupportedLexField id="antonym">antonym</SupportedLexField>
+        <SupportedLexField id="hyponym">hyponym</SupportedLexField>
+        <SupportedLexField id="hypernym">hypernym</SupportedLexField>
+        <SupportedLexField id="meronym">meronym</SupportedLexField>
+        <SupportedLexField id="holonym">holonym</SupportedLexField>
+        <SupportedLexField id="synonym">synonym</SupportedLexField>
+        <SupportedLexField id="related">related</SupportedLexField>
+        <SupportedLexField id="ref">ref</SupportedLexField>
+        <SupportedLexField id="senseRef">senseRef</SupportedLexField>
+        <SupportedLexField id="citation">citation</SupportedLexField>
+    </SupportedLexFields>
+    <Resources>
+        <!-- Demo -->
+        <Resource pid="test_wiktionary-en">
+            <Title xml:lang="en">Wiktionary, the free dictionary</Title>
+            <Description xml:lang="en">The English-language Wiktionary, a collaborative project to produce a free-content multilingual dictionary. It aims to describe all words of all languages using definitions and descriptions in English.</Description>
+            <Institution xml:lang="en">Wikimedia Foundation</Institution>
+            <LandingPageURI>https://en.wiktionary.org/wiki/</LandingPageURI>
+            <Languages>
+                <Language>eng</Language>
+            </Languages>
+            <AvailableDataViews ref="hits lex" />
+            <AvailableLexFields ref="lang entryId lemma translation phonetic definition etymology pos holonym synonym ref related senseRef citation" />
+        </Resource>
+    </Resources>
+</EndpointDescription>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    id="TEXTPLUS_DEMO_LEX_FCS" version="2.5">
+    <display-name>SRU/CQL LexFCS 2.0 Endpoint</display-name>
+    <description>SRU/CQL FCS 2.0 FCS Endpoint Service</description>
+
+    <!-- great for static configurations but not for dynamic ones, see JNDI `jetty-env.xml` -->
+    <!--
+    <context-param>
+        <description>Default resource</description>
+        <param-name>DEFAULT_RESOURCE_PID</param-name>
+        <param-value>test_wiktionary-en</param-value>
+    </context-param>
+    <context-param>
+        <description>Solr URL</description>
+        <param-name>SOLR_URL</param-name>
+        <param-value>http://127.0.0.1:8983/solr</param-value>
+    </context-param>
+    <context-param>
+        <description>Solr username</description>
+        <param-name>SOLR_USER</param-name>
+        <param-value></param-value>
+    </context-param>
+    <context-param>
+        <description>Solr password</description>
+        <param-name>SOLR_PASSWORD</param-name>
+        <param-value></param-value>
+    </context-param>
+    -->
+
+    <servlet>
+        <display-name>SAW Text+ SRU/CQL Service (HTTP Interface)</display-name>
+        <servlet-name>SRU/CQL</servlet-name>
+        <servlet-class>eu.clarin.sru.server.utils.SRUServerServlet</servlet-class>
+        <init-param>
+            <param-name>eu.clarin.sru.server.numberOfRecords</param-name>
+            <param-value>250</param-value>
+        </init-param>
+        <init-param>
+            <param-name>eu.clarin.sru.server.maximumRecords</param-name>
+            <param-value>1000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>eu.clarin.sru.server.allowOverrideMaximumRecords</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>eu.clarin.sru.server.allowOverrideIndentResponse</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- To enable SRU 2.0 for FCS 2.0 -->
+        <init-param>
+            <param-name>eu.clarin.sru.server.sruSupportedVersionMax</param-name>
+            <param-value>2.0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>eu.clarin.sru.server.legacyNamespaceMode</param-name>
+            <param-value>loc</param-value>
+        </init-param>
+        <init-param>
+            <param-name>eu.clarin.sru.server.utils.sruServerSearchEngineClass</param-name>
+            <param-value>de.saw_leipzig.textplus.webservices.fcs.lexfcs_solr_endpoint.SAWSRUEndpoint</param-value>
+        </init-param>
+        <init-param>
+            <param-name>eu.clarin.sru.server.database</param-name>
+            <param-value>solr-demo-endpoint</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SRU/CQL</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+</web-app>

@@ -1,0 +1,23 @@
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "https://www.eclipse.org/jetty/configure_10_0.dtd">
+<Configure id="wac" class="org.eclipse.jetty.webapp.WebAppContext">
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>param/SOLR_URL</Arg>
+        <Arg type="java.lang.String"><Env name="SOLR_URL" default="http://127.0.0.1:8983/solr" /></Arg>
+        <Arg type="boolean">true</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>param/SOLR_USER</Arg>
+        <Arg type="java.lang.String"><Env name="SOLR_USER" /></Arg>
+        <Arg type="boolean">true</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>param/SOLR_PASSWORD</Arg>
+        <Arg type="java.lang.String"><Env name="SOLR_PASSWORD" /></Arg>
+        <Arg type="boolean">true</Arg>
+    </New>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>param/DEFAULT_RESOURCE_PID</Arg>
+        <Arg type="java.lang.String"><Env name="DEFAULT_RESOURCE_PID" /></Arg>
+        <Arg type="boolean">true</Arg>
+    </New>
+</Configure>

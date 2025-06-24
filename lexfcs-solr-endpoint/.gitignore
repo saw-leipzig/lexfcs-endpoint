@@ -1,0 +1,6 @@
+target/
+${sys:catalina.base}/logs/
+
+.vscode/settings.json
+
+.env

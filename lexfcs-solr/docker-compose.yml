@@ -1,0 +1,4 @@
+services:
+  solr:
+    image: solr:9.1
+    container_name: fcs_solr

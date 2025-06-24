@@ -1,0 +1,320 @@
+<add>
+   <!-- "leaf" as noun -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">https://en.wiktionary.org/wiki/leaf#Noun</field>
+      <field name="xmlLang">eng</field>
+      <field name="landingpage">https://en.wiktionary.org/wiki/leaf</field>
+      <field name="dataview_hits">leaf: 1. The usually green and flat organ that represents the most prominent feature of most vegetative plants. 2. A foliage leaf or any of the many and often considerably different structures it can specialise into. 3. Anything resembling the leaf of a plant.</field>
+      <field name="dataview_lexhits">&lt;Hit kind="lex-lemma"&gt;leaf&lt;/Hit&gt;: &lt;Hit kind="lex-definition"&gt;The usually green and flat organ that represents the most prominent feature of most vegetative plants.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;A foliage leaf or any of the many and often considerably different structures it can specialise into.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;Anything resembling the leaf of a plant.&lt;/Hit&gt;</field>
+      <field name="values">
+         <!-- ID -->
+         <doc>
+            <field name="_type">value_entryId</field>
+            <field name="value">https://en.wiktionary.org/wiki/leaf#Noun</field>
+         </doc>
+         <!-- lemma -->
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">leaf</field>
+         </doc>
+         <!-- definition -->
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">The usually green and flat organ that represents the most prominent feature of most vegetative plants.</field>
+            <field name="xmlId">sense_leaf.n.01</field>
+         </doc>
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">A foliage leaf or any of the many and often considerably different structures it can specialise into.</field>
+            <field name="xmlId">sense_leaf.n.02</field>
+         </doc>
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">Anything resembling the leaf of a plant.</field>
+            <field name="xmlId">sense_leaf.n.03</field>
+         </doc>
+         <!-- etymology -->
+         <doc>
+            <field name="_type">value_etymology</field>
+            <field name="value">From Middle English leef, from Old English lēaf, from Proto-West Germanic *laub, from Proto-Germanic *laubą (“leaf”), from Proto-Indo-European *lowbʰ-o-m, from *lewbʰ- (“leaf, rind”).</field>
+         </doc>
+         <!-- phonetic -->
+            <doc>
+            <field name="_type">value_phonetic</field>
+            <field name="value">/liːf/</field>
+            <field name="ref">https://upload.wikimedia.org/wikipedia/commons/d/d3/En-us-leaf.ogg</field>
+            <field name="vocabRef">https://www.wikidata.org/wiki/Q21204</field>
+         </doc>
+         <!-- pos -->
+         <doc>
+            <field name="_type">value_pos</field>
+            <field name="value">noun</field>
+            <field name="vocabValueRef">https://universaldependencies.org/u/pos/NOUN</field>
+         </doc>
+         <!-- ref (external reference) -->
+         <doc>
+            <field name="_type">value_ref</field>
+            <field name="value">https://en.wikipedia.org/wiki/Lion</field>
+            <field name="idRefs">sense_leaf.n.01 sense_leaf.n.02</field>
+         </doc>
+         <!-- related -->
+         <doc>
+            <field name="_type">value_related</field>
+            <field name="value">four-leaf</field>
+         </doc>
+         <doc>
+            <field name="_type">value_related</field>
+            <field name="value">leafeater</field>
+         </doc>
+         <doc>
+            <field name="_type">value_related</field>
+            <field name="value">leaf storm</field>
+         </doc>
+         <!-- senseRef -->
+         <!-- "leaf" in Wikidata for the first two definitions -->
+         <doc>
+            <field name="_type">value_senseRef</field>
+            <field name="value">Q33971</field>
+            <field name="idRefs">sense_leaf.n.01 sense_leaf.n.02</field>
+            <field name="vocabValueRef">https://www.wikidata.org/wiki/Q33971</field>
+         </doc>
+         <!-- synonym -->
+         <doc>
+            <field name="_type">value_synonym</field>
+            <field name="value">phyllon</field>
+         </doc>
+         <!-- translation -->
+         <!-- translations related to first definition (sense_leaf.n.01) -->
+         <doc>
+            <field name="_type">value_translation</field>
+            <field name="value">Blatt</field>
+            <field name="idRefs">sense_leaf.n.01</field>
+            <field name="xmlLang">deu</field>
+         </doc>
+            <doc>
+            <field name="_type">value_translation</field>
+            <field name="value">dahon</field>
+            <field name="idRefs">sense_leaf.n.01</field>
+            <field name="xmlLang">tgl</field>
+         </doc>
+         <!-- translations related to third definition (sense_leaf.n.03) -->
+         <doc>
+            <field name="_type">value_translation</field>
+            <field name="value">blaar</field>
+            <field name="idRefs">sense_leaf.n.03</field>
+            <field name="xmlLang">afr</field>
+         </doc>
+         <doc>
+            <field name="_type">value_translation</field>
+            <field name="value">φύλλο</field>
+            <field name="idRefs">sense_leaf.n.03</field>
+            <field name="xmlLang">ell</field>
+         </doc>
+      </field>
+   </doc>
+
+   <!-- "leaf" as verb -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">https://en.wiktionary.org/wiki/leaf#Verb</field>
+      <field name="xmlLang">eng</field>
+      <field name="landingpage">https://en.wiktionary.org/wiki/leaf</field>
+      <field name="dataview_hits">leaf: 1. To produce leaves; put forth foliage. 2. To divide (a vegetable) into separate leaves. 3. To play a prank on someone by throwing a large clump or collection of leaves at them.</field>
+      <field name="dataview_lexhits">&lt;Hit kind="lex-lemma"&gt;leaf&lt;/Hit&gt;: &lt;Hit kind="lex-definition"&gt;To produce leaves; put forth foliage.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;To divide (a vegetable) into separate leaves.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;To play a prank on someone by throwing a large clump or collection of leaves at them.&lt;/Hit&gt;</field>
+      <field name="values">
+         <!-- ID -->
+         <doc>
+            <field name="_type">value_entryId</field>
+            <field name="value">https://en.wiktionary.org/wiki/leaf#Verb</field>
+         </doc>
+         <!-- lemma -->
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">leaf</field>
+         </doc>
+         <!-- definition -->
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">To produce leaves; put forth foliage.</field>
+            <field name="xmlId">sense_leaf.v.01</field>
+         </doc>
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">To divide (a vegetable) into separate leaves.</field>
+            <field name="xmlId">sense_leaf.v.02</field>
+         </doc>
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">To play a prank on someone by throwing a large clump or collection of leaves at them.</field>
+            <field name="xmlId">sense_leaf.v.03</field>
+         </doc>
+         <!-- citation (=example) --> 
+         <doc>
+            <field name="_type">value_citation</field>
+            <field name="value">The lettuce in our burgers is 100% hand-leafed.</field>
+            <field name="idRefs">sense_leaf.v.02</field>
+            <field name="type">example</field>
+         </doc>
+         <!-- etymology -->
+         <doc>
+            <field name="_type">value_etymology</field>
+            <field name="value">From Middle English leef, from Old English lēaf, from Proto-West Germanic *laub, from Proto-Germanic *laubą (“leaf”), from Proto-Indo-European *lowbʰ-o-m, from *lewbʰ- (“leaf, rind”).</field>
+         </doc>
+         <!-- phonetic -->
+            <doc>
+            <field name="_type">value_phonetic</field>
+            <field name="value">/liːf/</field>
+            <field name="ref">https://upload.wikimedia.org/wikipedia/commons/d/d3/En-us-leaf.ogg</field>
+            <field name="vocabRef">https://www.wikidata.org/wiki/Q21204</field>
+         </doc>
+         <!-- pos -->
+         <doc>
+            <field name="_type">value_pos</field>
+            <field name="value">verb</field>
+            <field name="vocabValueRef">https://universaldependencies.org/u/pos/VERB</field>
+         </doc>
+         <!-- related -->
+         <doc>
+            <field name="_type">value_related</field>
+            <field name="value">foliage</field>
+         </doc>
+         <doc>
+            <field name="_type">value_related</field>
+            <field name="value">frond</field>
+         </doc>
+         <doc>
+            <field name="_type">value_related</field>
+            <field name="value">needle</field>
+         </doc>
+         <!-- translation -->
+         <!-- translations related to first definition (sense_leaf.v.01) -->
+         <doc>
+            <field name="_type">value_translation</field>
+            <field name="value">lehtiä</field>
+            <field name="idRefs">sense_leaf.v.01</field>
+            <field name="xmlLang">fin</field>
+         </doc>
+         <doc>
+            <field name="_type">value_translation</field>
+            <field name="value">feuiller </field>
+            <field name="idRefs">sense_leaf.v.01</field>
+            <field name="xmlLang">fra</field>
+         </doc>
+            <doc>
+            <field name="_type">value_translation</field>
+            <field name="value">spricka ut</field>
+            <field name="idRefs">sense_leaf.v.01</field>
+            <field name="xmlLang">swe</field>
+         </doc>
+      </field>
+   </doc>
+   
+   <!-- "lion" as noun -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">https://en.wiktionary.org/wiki/lion#Noun</field>
+      <field name="xmlLang">eng</field>
+      <field name="landingpage">https://en.wiktionary.org/wiki/lion</field>
+      <field name="dataview_hits">lion: 1. A big cat, Panthera leo, native to Africa, India and formerly much of Europe. 2. A Chinese foo dog. 3. An old Scottish coin, with a lion on the obverse, worth 74 shillings.</field>
+      <field name="dataview_lexhits">&lt;Hit kind="lex-lemma"&gt;lion&lt;/Hit&gt;: &lt;Hit kind="lex-definition"&gt;A big cat, Panthera leo, native to Africa, India and formerly much of Europe.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;A Chinese foo dog.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;An old Scottish coin, with a lion on the obverse, worth 74 shillings.&lt;/Hit&gt;</field>
+      <field name="values">
+         <!-- ID -->
+         <doc>
+            <field name="_type">value_entryId</field>
+            <field name="value">https://en.wiktionary.org/wiki/lion#Noun</field>
+         </doc>
+         <!-- lemma -->
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">lion</field>
+         </doc>
+         <!-- definition -->
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">A big cat, Panthera leo, native to Africa, India and formerly much of Europe.</field>
+            <field name="xmlId">sense_lion.n.01</field>
+         </doc>
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">A Chinese foo dog.</field>
+            <field name="xmlId">sense_lion.n.02</field>
+         </doc>
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">An old Scottish coin, with a lion on the obverse, worth 74 shillings.</field>
+            <field name="xmlId">sense_lion.n.03</field>
+         </doc>
+         <!-- etymology -->
+         <doc>
+            <field name="_type">value_etymology</field>
+            <field name="value">From Middle English lyoun, lion, leon, borrowed from Old French lion, from Latin leō, (accusative: leōnem), from Ancient Greek λέων (léōn), of unclear origin. Doublet of Leo, leu, lev and Lyon. Displaced Old English lēo.</field>
+         </doc>
+         <!-- holonym -->
+         <doc>
+            <field name="_type">value_holonym</field>
+            <field name="value">pride</field>
+            <field name="idRefs">sense_lion.n.01 sense_lion.n.01</field>
+         </doc>
+         <!-- phonetic -->
+         <doc>
+            <field name="_type">value_phonetic</field>
+            <field name="value">/ˈlaɪən/</field>
+            <field name="ref">https://upload.wikimedia.org/wikipedia/commons/a/aa/En-us-lion.ogg</field>
+         </doc>
+         <!-- pos -->
+         <doc>
+            <field name="_type">value_pos</field>
+            <field name="value">noun</field>
+            <field name="vocabValueRef">https://universaldependencies.org/u/pos/NOUN</field>
+         </doc>
+         <!-- ref (external reference) -->
+         <doc>
+            <field name="_type">value_ref</field>
+            <field name="value">https://en.wikipedia.org/wiki/Lion</field>
+            <field name="idRefs">sense_lion.n.01 sense_lion.n.02</field>
+         </doc>
+         <!-- senseRef -->
+         <!-- "leaf" in Wikidata for the first two definitions -->
+         <doc>
+            <field name="_type">value_senseRef</field>
+            <field name="value">Q140</field>
+            <field name="idRefs">sense_lion.n.01</field>
+            <field name="vocabValueRef">https://www.wikidata.org/wiki/Q140</field>
+         </doc>
+      </field>
+   </doc>
+   
+   <!-- "lion" as adjective -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">https://en.wiktionary.org/wiki/lion#Adjective</field>
+      <field name="xmlLang">eng</field>
+      <field name="landingpage">https://en.wiktionary.org/wiki/lion</field>
+      <field name="dataview_hits">lion: Of the light brown color that resembles the fur of a lion.</field>
+      <field name="dataview_lexhits">&lt;Hit kind="lex-lemma"&gt;lion&lt;/Hit&gt;: &lt;Hit kind="lex-definition"&gt;Of the light brown color that resembles the fur of a lion.&lt;/Hit&gt;</field>
+      <field name="values">
+         <!-- ID -->
+         <doc>
+            <field name="_type">value_entryId</field>
+            <field name="value">https://en.wiktionary.org/wiki/lion#Adjective</field>
+         </doc>
+         <!-- lemma -->
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">lion</field>
+         </doc>
+         <!-- definition -->
+         <doc>
+            <field name="_type">value_definition</field>
+            <field name="value">Of the light brown color that resembles the fur of a lion.</field>
+         </doc>
+         <!-- pos -->
+         <doc>
+            <field name="_type">value_pos</field>
+            <field name="value">adjective</field>
+            <field name="vocabValueRef">https://universaldependencies.org/u/pos/ADJ</field>
+         </doc>
+      </field>
+   </doc>
+</add>
