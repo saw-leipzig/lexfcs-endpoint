@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Körner"
+  given-names: "Erik"
+  orcid: "https://orcid.org/0000-0002-5639-6177"
+title: "LexFCS Endpoint with Solr search engine"
+version: 1.0.0
+date-released: 2025-07-09
+url: "https://github.com/saw-leipzig/lexfcs-endpoint"
