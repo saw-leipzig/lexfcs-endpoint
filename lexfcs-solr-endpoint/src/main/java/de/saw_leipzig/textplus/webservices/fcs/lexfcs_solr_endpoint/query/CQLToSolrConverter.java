@@ -10,7 +10,7 @@ import org.z3950.zing.cql.CQLTermNode;
 
 import eu.clarin.sru.server.SRUConstants;
 import eu.clarin.sru.server.SRUException;
-import eu.clarin.sru.server.fcs.parser.QueryParserException;
+import eu.clarin.sru.fcs.qlparser.QueryParserException;
 
 public class CQLToSolrConverter {
     private static final Logger LOGGER = LogManager.getLogger(CQLToSolrConverter.class);

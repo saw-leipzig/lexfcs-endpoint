@@ -25,10 +25,10 @@ The example deployment uses `docker compose` for easy setup and encapsulation. P
 
    ```bash
    cd lexfcs-solr-endpoint/
-   # build endpoint
-   docker compose build
    # NOTE: please update the credentials ...
    cp .env.template .env
+   # build endpoint
+   docker compose build
    # start and run in background
    docker compose up -d
    ```

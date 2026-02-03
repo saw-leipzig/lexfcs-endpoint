@@ -1,13 +1,13 @@
 package de.saw_leipzig.textplus.webservices.fcs.lexfcs_solr_endpoint.query;
 
 import eu.clarin.sru.server.SRUException;
-import eu.clarin.sru.server.fcs.parser.QueryParserException;
-import eu.clarin.sru.server.fcs.parser_lex.QueryNode;
-import eu.clarin.sru.server.fcs.parser_lex.QueryParser;
+import eu.clarin.sru.fcs.qlparser.QueryParserException;
+import eu.clarin.sru.fcs.qlparser.lex.QueryNode;
+import eu.clarin.sru.fcs.qlparser.lex.QueryParser;
 
 public class LexCQLConversionTest {
     public static void main(String[] args)
-            throws QueryParserException, SRUException, eu.clarin.sru.server.fcs.parser_lex.QueryParserException {
+            throws QueryParserException, SRUException {
 
         final String lexCqlQuery;
         if (args.length == 1) {

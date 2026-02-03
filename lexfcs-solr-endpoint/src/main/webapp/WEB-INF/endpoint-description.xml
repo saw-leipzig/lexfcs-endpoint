@@ -53,6 +53,10 @@
             </Languages>
             <AvailableDataViews ref="hits lex" />
             <AvailableLexFields ref="lang entryId lemma translation phonetic definition etymology pos holonym synonym ref related senseRef citation" />
+            <ExampleQuery type="lex">
+                <Query>lemma = "lion"</Query>
+                <Description xml:lang="en">An example query to find all lemmata with "lion".</Description>
+            </ExampleQuery>
         </Resource>
     </Resources>
 </EndpointDescription>

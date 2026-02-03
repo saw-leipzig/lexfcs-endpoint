@@ -55,7 +55,7 @@
          <!-- ref (external reference) -->
          <doc>
             <field name="_type">value_ref</field>
-            <field name="value">https://en.wikipedia.org/wiki/Lion</field>
+            <field name="value">https://en.wikipedia.org/wiki/Leaf</field>
             <field name="idRefs">sense_leaf.n.01 sense_leaf.n.02</field>
          </doc>
          <!-- related -->

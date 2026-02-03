@@ -5,14 +5,14 @@ import org.apache.logging.log4j.Logger;
 
 import eu.clarin.sru.server.SRUConstants;
 import eu.clarin.sru.server.SRUException;
-import eu.clarin.sru.server.fcs.parser.QueryParserException;
-import eu.clarin.sru.server.fcs.parser_lex.Modifier;
-import eu.clarin.sru.server.fcs.parser_lex.QueryNode;
-import eu.clarin.sru.server.fcs.parser_lex.RBoolean;
-import eu.clarin.sru.server.fcs.parser_lex.Relation;
-import eu.clarin.sru.server.fcs.parser_lex.SearchClause;
-import eu.clarin.sru.server.fcs.parser_lex.SearchClauseGroup;
-import eu.clarin.sru.server.fcs.parser_lex.Subquery;
+import eu.clarin.sru.fcs.qlparser.QueryParserException;
+import eu.clarin.sru.fcs.qlparser.lex.Modifier;
+import eu.clarin.sru.fcs.qlparser.lex.QueryNode;
+import eu.clarin.sru.fcs.qlparser.lex.RBoolean;
+import eu.clarin.sru.fcs.qlparser.lex.Relation;
+import eu.clarin.sru.fcs.qlparser.lex.SearchClause;
+import eu.clarin.sru.fcs.qlparser.lex.SearchClauseGroup;
+import eu.clarin.sru.fcs.qlparser.lex.Subquery;
 
 public class LexCQLToSolrConverter {
     private static final Logger LOGGER = LogManager.getLogger(LexCQLToSolrConverter.class);
@@ -72,6 +72,7 @@ public class LexCQLToSolrConverter {
             sb.append("({!parent which=\"_type:entry\" v=\"");
             sb.append("+_type:value_*");
             sb.append(' ');
+            // NOTE: leave it as is, quoting seems to work?
             sb.append("+value_text:").append(getEscapedSearchTerm(sc.getSearchTerm(), false, true));
             sb.append("\"})");
 
@@ -82,7 +83,8 @@ public class LexCQLToSolrConverter {
         if ("lang".equalsIgnoreCase(field)) {
             sb.append('(');
             sb.append("_type:entry AND xmlLang:");
-            sb.append(getEscapedSearchTerm(sc.getSearchTerm(), false, false));
+            // plain string (only escape minus "-" if it appears)
+            sb.append(escapeSearchTerm(sc.getSearchTerm(), false));
             sb.append(')');
             return sb.toString();
         }
@@ -217,6 +219,7 @@ public class LexCQLToSolrConverter {
             sb.append(' ');
             sb.append('+');
             sb.append("vocabValueRef:");
+            // NOTE: simple quoting (with escaping) is enough here
             sb.append(getEscapedSearchTerm(sc.getSearchTerm(), true, true));
 
             sb.append('"'); // v="
@@ -241,7 +244,7 @@ public class LexCQLToSolrConverter {
         sb.append(' ');
         sb.append(operator);
         sb.append("value:");
-        sb.append(getEscapedSearchTerm(sc.getSearchTerm(), "==".equals(relation), true));
+        sb.append(escapeSearchTerm(sc.getSearchTerm(), true));
 
         sb.append('"'); // v="
         sb.append("})"); // ({!parent
@@ -250,21 +253,61 @@ public class LexCQLToSolrConverter {
     }
 
     private static String getEscapedSearchTerm(String value, boolean quote, boolean escapeQuote) {
-        boolean requireQuoting = quote;
+        boolean requireEscaping = quote;
         // the value requires quoting if it contains certain characters
-        if (value.contains(" ") || value.contains("=") || value.contains("<") || value.contains(">")
-                || value.contains(")") || value.contains("(") || value.contains("/") || value.contains("\"")
-                || value.contains("\\") || value.contains(":")) {
-            requireQuoting = true;
+        if (hasSpecialCharactersRequiringEscaping(value)) {
+            requireEscaping = true;
         }
         // escape quotes and backslashes
         value = value.replace("\\", "\\\\").replace("\"", "\\\"");
         // if values need quoting, escape backslashes in value again and add quotes
         // (add escapes for outer quotes if required)
-        if (requireQuoting) {
+        if (requireEscaping) {
             String toAdd = (escapeQuote) ? "\\\"" : "\"";
             value = toAdd + value.replace("\\", "\\\\") + toAdd;
         }
+        return value;
+    }
+
+    private static String escapeSearchTerm(String value, boolean escapeAgain) {
+        // simply escape all special characters (no check required, only for efficiency?)
+        value = escapeValue(value);
+        if (escapeAgain) {
+            value = value.replace("\\", "\\\\");
+        }
+        return value;
+    }
+
+    private static boolean hasSpecialCharactersRequiringEscaping(String value) {
+        return (value.contains("\\")
+                || value.contains(" ")
+                || value.contains("=")
+                || value.contains("<")
+                || value.contains(">")
+                || value.contains(")")
+                || value.contains("(")
+                || value.contains("]")
+                || value.contains("[")
+                || value.contains("/")
+                || value.contains("\"")
+                || value.contains(":")
+                || value.contains("!"));
+                // works: &, <, >, |
+    }
+
+    private static String escapeValue(String value) {
+        value = value.replace("\\", "\\\\");
+        value = value.replace(" ", "\\ ");
+        value = value.replace("=", "\\=");
+        value = value.replace("<", "\\<");
+        value = value.replace(">", "\\>");
+        value = value.replace(")", "\\)");
+        value = value.replace("(", "\\(");
+        value = value.replace("]", "\\]");
+        value = value.replace("[", "\\[");
+        value = value.replace("/", "\\/");
+        value = value.replace(":", "\\:");
+        value = value.replace("!", "\\!");
         return value;
     }
 

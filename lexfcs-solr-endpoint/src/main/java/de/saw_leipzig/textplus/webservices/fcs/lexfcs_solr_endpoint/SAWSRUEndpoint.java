@@ -38,7 +38,7 @@ import eu.clarin.sru.server.fcs.EndpointDescription;
 import eu.clarin.sru.server.fcs.LexCQLQueryParser;
 import eu.clarin.sru.server.fcs.ResourceInfo;
 import eu.clarin.sru.server.fcs.SimpleEndpointSearchEngineBase;
-import eu.clarin.sru.server.fcs.parser.QueryParserException;
+import eu.clarin.sru.fcs.qlparser.QueryParserException;
 import eu.clarin.sru.server.fcs.utils.SimpleEndpointDescriptionParser;
 
 public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {

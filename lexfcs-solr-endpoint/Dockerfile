@@ -7,12 +7,12 @@ COPY pom.xml /work/
 
 # note: that those commands may take a while to finish
 # they are used to cache pom.xml plugins and dependencies for faster builds
-RUN mvn -ntp dependency:resolve-plugins
-RUN mvn -ntp dependency:resolve
+RUN mvn -B dependency:resolve-plugins
+RUN mvn -B dependency:resolve
 
 COPY src /work/src
 
-RUN mvn -ntp clean package
+RUN mvn -B clean package
 
 # ---------------------------------------------------------------------------
 FROM jetty:10-jdk11-eclipse-temurin AS jetty

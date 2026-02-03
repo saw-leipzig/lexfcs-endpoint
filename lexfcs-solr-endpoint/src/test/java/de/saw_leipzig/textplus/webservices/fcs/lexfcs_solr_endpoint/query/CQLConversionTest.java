@@ -7,7 +7,7 @@ import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
 
 import eu.clarin.sru.server.SRUException;
-import eu.clarin.sru.server.fcs.parser.QueryParserException;
+import eu.clarin.sru.fcs.qlparser.QueryParserException;
 
 public class CQLConversionTest {
     public static void main(String[] args)

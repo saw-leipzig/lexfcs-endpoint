@@ -182,6 +182,41 @@
                                                     </xs:documentation>
                                                 </xs:annotation>
                                             </xs:attribute>
+                                            <xs:attribute name="qualifier" use="optional">
+                                                <xs:annotation>
+                                                    <xs:documentation>
+                                                        <h:p>
+                                                            An optional attribute that is used as a qualifier in a FCS-QL
+                                                            search term in to address this specific layer.
+                                                        </h:p>
+                                                    </xs:documentation>
+                                                </xs:annotation>
+                                                <xs:simpleType>
+                                                    <xs:restriction base="xs:string">
+                                                        <xs:pattern value="[a-zA-Z0-9-]+" />
+                                                    </xs:restriction>
+                                                </xs:simpleType>
+                                            </xs:attribute>
+                                            <xs:attribute name="alt-value-info" type="xs:string" use="optional">
+                                                <xs:annotation>
+                                                    <xs:documentation>
+                                                        <h:p>
+                                                            An optional short description about the layer, e.g. the original tag set used.
+                                                        </h:p>
+                                                    </xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
+                                            <xs:attribute name="alt-value-info-uri" type="xs:anyURI" use="optional">
+                                                <xs:annotation>
+                                                    <xs:documentation>
+                                                        <h:p>
+                                                            An optional well-formed URI that should point to a web site with further information,
+                                                            e.g. about the original tag set and how the translation to FCS is done.
+                                                            Clients can display this information together with the search result.
+                                                        </h:p>
+                                                    </xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
                                             <xs:attribute name="type" use="optional" default="value">
                                                 <xs:annotation>
                                                     <xs:documentation>
@@ -443,7 +478,7 @@
                     <xs:annotation>
                         <xs:documentation>
                             <h:p>
-                                A human readable title for the resource. An English version is
+                                A human-readable title for the resource. An English version is
                                 mandatory.
                             </h:p>
                         </xs:documentation>
@@ -454,7 +489,7 @@
                     <xs:annotation>
                         <xs:documentation>
                             <h:p>
-                                An optional human-readable description of the resource. Is should
+                                An optional human-readable description of the resource. It should
                                 be at most one sentence. If supplied, an English version is
                                 mandatory.
                             </h:p>
@@ -466,9 +501,8 @@
                     <xs:annotation>
                         <xs:documentation>
                             <h:p>
-                                An optional human-readable institution name of the resource. This
-                                overrides the default institution name derived from the endpoint
-                                provider. If supplied, an English version is mandatory.
+                                An optional human-readable institution name of the resource.
+                                If supplied, an English version is mandatory.
                             </h:p>
                         </xs:documentation>
                     </xs:annotation>
@@ -556,6 +590,16 @@
                     </xs:complexType>
                 </xs:element>
 
+                <xs:element ref="ed:ExampleQuery" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <h:p>
+                                This element contains an example query related to this resource.
+                            </h:p>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
                 <xs:element name="RequiredFonts" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>
@@ -589,7 +633,7 @@
                         <xs:documentation>
                             <h:p>
                                 Extension point to allow Endpoints to embed custom data in the Endpoint Description
-                                for a specific resource. CLARIN-FCS clients SHOULD ignore any data they do not understand.  
+                                for a specific resource. CLARIN-FCS clients SHOULD ignore any data they do not understand.
                             </h:p>
                         </xs:documentation>
                     </xs:annotation>
@@ -609,6 +653,57 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="ExampleQuery">
+        <xs:annotation>
+            <xs:documentation>
+                <h:p>
+                    An example query for a resource. Specific for a query type with
+                    human-readable descriptions.
+                </h:p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Query" type="xs:string" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <h:p>
+                                The query string.
+                            </h:p>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Description" type="ed:i18nString" minOccurs="1"
+                    maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <h:p>
+                                An human-readable description of the example query.
+                                It should be at most one sentence. An English version
+                                is mandatory.
+                            </h:p>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <!-- extension point -->
+                <xs:any namespace="##other" processContents="skip" minOccurs="0"
+                    maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <h:p>
+                                Extension point to allow Endpoints to embed custom data in the
+                                Endpoint Description for a specific resource example query.
+                                CLARIN-FCS clients SHOULD ignore any data they do not understand.
+                            </h:p>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:any>
+            </xs:sequence>
+            <xs:attribute name="type" type="ed:queryTypeString" use="required" />
+        </xs:complexType>
+    </xs:element>
+
     <xs:simpleType name="mimetypeString">
         <xs:restriction base="xs:string">
             <xs:pattern value="\w+/\w([\.\-]{0,1}\w)*(\+\w+){0,1}" />
@@ -622,4 +717,19 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="queryTypeString">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="cql" />
+                    <xs:enumeration value="fcs" />
+                    <xs:enumeration value="lex" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string" />
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
 </xs:schema>
