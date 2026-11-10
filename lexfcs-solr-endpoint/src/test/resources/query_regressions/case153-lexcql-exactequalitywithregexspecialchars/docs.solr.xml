@@ -1,0 +1,53 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case153:01</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">Alle Wege führen nach Rom</field>
+        <field name="dataview_lexhits">Alle Wege führen nach Rom</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case153:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Alle Wege führen nach Rom</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case153:02</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">A green mouse dashes across a hill</field>
+        <field name="dataview_lexhits">A green mouse dashes across a hill</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case153:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">A green mouse dashes across a hill</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case153:03</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">Beware, dogs.</field>
+        <field name="dataview_lexhits">Beware, dogs.</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case153:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Beware, dogs.</field>
+            </doc>
+        </field>
+    </doc>
+</add>

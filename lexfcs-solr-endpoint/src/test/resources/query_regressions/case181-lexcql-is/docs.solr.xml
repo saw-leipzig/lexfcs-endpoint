@@ -1,0 +1,55 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case181:01</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">1</field>
+        <field name="dataview_lexhits">1</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case181:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">n</field>
+                <field name="vocabValueRef">https://universaldependencies.org/u/pos/NOUN</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case181:02</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">2</field>
+        <field name="dataview_lexhits">2</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case181:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">NOUN</field>
+                <field name="vocabValueRef">https://example.org/u/pos/NOUN</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case181:03</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">2</field>
+        <field name="dataview_lexhits">2</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case181:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">NOUN</field>
+            </doc>
+        </field>
+    </doc>
+</add>

@@ -2,7 +2,6 @@ services:
   endpoint:
     build: .
     container_name: fcs_solr_endpoint
-    env_file: .env
     environment:
       - SOLR_URL
       - DEFAULT_RESOURCE_PID

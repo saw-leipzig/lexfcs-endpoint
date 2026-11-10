@@ -1,0 +1,24 @@
+<add>
+    <!-- first document -->
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">case002:01</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">abc</field>
+            </doc>
+        </field>
+    </doc>
+    <!-- second document -->
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">case002:02</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">def</field>
+            </doc>
+        </field>
+    </doc>
+</add>

@@ -1,0 +1,22 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">case000:01</field>
+        <field name="xmlLang">eng</field>
+        <field name="landingpage">https://en.wiktionary.org/wiki/leaf</field>
+        <field name="dataview_hits">leaf: 1. The usually green and flat organ that represents the most prominent feature of most vegetative plants. 2. A foliage leaf or any of the many and often considerably different structures it can specialise into. 3. Anything resembling the leaf of a plant.</field>
+        <field name="dataview_lexhits">&lt;Hit kind="lex-lemma"&gt;leaf&lt;/Hit&gt;: &lt;Hit kind="lex-definition"&gt;The usually green and flat organ that represents the most prominent feature of most vegetative plants.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;A foliage leaf or any of the many and often considerably different structures it can specialise into.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;Anything resembling the leaf of a plant.&lt;/Hit&gt;</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">https://en.wiktionary.org/wiki/leaf#Noun</field>
+            </doc>
+        </field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">leaf</field>
+            </doc>
+        </field>
+    </doc>
+</add>

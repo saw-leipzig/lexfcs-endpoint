@@ -89,20 +89,36 @@ public class ResultEntry {
         return getListsOfType("etymology");
     }
 
+    public List<FieldValue> getGrammar() {
+        return getListsOfType("grammar");
+    }
+
     public List<FieldValue> getCase() {
         return getListsOfType("case");
     }
 
-    public List<FieldValue> getNumber() {
-        return getListsOfType("number");
+    public List<FieldValue> getDegree() {
+        return getListsOfType("degree");
     }
 
     public List<FieldValue> getGender() {
         return getListsOfType("gender");
     }
 
+    public List<FieldValue> getMood() {
+        return getListsOfType("mood");
+    }
+
+    public List<FieldValue> getNumber() {
+        return getListsOfType("number");
+    }
+
     public List<FieldValue> getPos() {
         return getListsOfType("pos");
+    }
+
+    public List<FieldValue> getTense() {
+        return getListsOfType("tense");
     }
 
     public List<FieldValue> getBaseform() {

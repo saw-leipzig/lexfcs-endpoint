@@ -1,0 +1,90 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case174:01</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">seal</field>
+        <field name="dataview_lexhits">seal</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case174:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">seal</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">n</field>
+                <field name="vocabValueRef">https://universaldependencies.org/u/pos/NOUN</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case174:02</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">Seal</field>
+        <field name="dataview_lexhits">Seal</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case174:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Seal</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">PROPN</field>
+                <field name="vocabValueRef">https://universaldependencies.org/u/pos/PROPN</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case174:03</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">seal</field>
+        <field name="dataview_lexhits">seal</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case174:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">seal</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">VERB</field>
+                <field name="vocabValueRef">https://universaldependencies.org/u/pos/VERB</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case174:04</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">Leipzig</field>
+        <field name="dataview_lexhits">Leipzig</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case174:04</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Leipzig</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">PROPN</field>
+                <field name="vocabValueRef">https://universaldependencies.org/u/pos/PROPN</field>
+            </doc>
+        </field>
+    </doc>
+</add>

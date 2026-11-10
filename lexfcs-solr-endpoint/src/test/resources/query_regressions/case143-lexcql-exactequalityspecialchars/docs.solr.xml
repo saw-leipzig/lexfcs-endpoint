@@ -1,0 +1,70 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case143:01</field>
+        <field name="xmlLang">deu</field>
+        <field name="dataview_hits">Wege</field>
+        <field name="dataview_lexhits">Wege</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case143:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Wege</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case143:02</field>
+        <field name="xmlLang">deu</field>
+        <field name="dataview_hits">Wegelagerer greifen an</field>
+        <field name="dataview_lexhits">Wegelagerer greifen an</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case143:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Wegelagerer greifen an</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case143:03</field>
+        <field name="xmlLang">deu</field>
+        <field name="dataview_hits">Wegen</field>
+        <field name="dataview_lexhits">Wegen</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case143:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Wegen</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case143:04</field>
+        <field name="xmlLang">deu</field>
+        <field name="dataview_hits">Weg</field>
+        <field name="dataview_lexhits">Weg</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case143:04</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Weg</field>
+            </doc>
+        </field>
+    </doc>
+</add>

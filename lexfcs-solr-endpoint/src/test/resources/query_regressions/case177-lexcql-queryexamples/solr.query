@@ -1,0 +1,1 @@
+( (_type:entry AND xmlLang:de) AND ({!parent which="_type:entry" v="+_type:value_translation +xmlLang:en +value:car"}) )

@@ -64,7 +64,7 @@
                                 </xs:annotation>
                                 <xs:simpleType>
                                     <xs:restriction base="xs:anyURI">
-                                        <xs:pattern value="http://clarin.eu/fcs/capability/\w([\.\-]{0,1}\w)*" />
+                                        <xs:pattern value="http://clarin.eu/fcs/capability/\w([\.\-]{0,1}\w)*(/[0-9]+(\.[0-9]+)*)?" />
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>

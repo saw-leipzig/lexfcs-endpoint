@@ -1,6 +1,7 @@
 services:
   endpoint:
     container_name: lexfcs-endpoint
+    env_file: .env
     environment:
       - SOLR_URL=http://solr:8983/solr
     networks:
