@@ -252,6 +252,11 @@ public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
         int startRecord = ((request.getStartRecord() < 1) ? 1 : request.getStartRecord()) - 1;
         int maximumRecords = request.getMaximumRecords();
 
+        if (!Searcher.isValidPagination(startRecord, maximumRecords)) {
+            // handle special case where start offset and limit is too large for Solr
+            throw new SRUException(SRUConstants.SRU_FIRST_RECORD_POSITION_OUT_OF_RANGE);
+        }
+
         SearchResultSet results = searcher.search(solrQuery, resourceName, startRecord, maximumRecords);
         if (results == null) {
             throw new SRUException(SRUConstants.SRU_GENERAL_SYSTEM_ERROR, "Error in Searcher");

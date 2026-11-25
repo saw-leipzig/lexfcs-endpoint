@@ -62,6 +62,15 @@ public class Searcher {
         return true;
     }
 
+    public static boolean isValidPagination(long offset, int limit) {
+        // if start offset is too large, solr will raise an
+        // {@code java.lang.NegativeArraySizeException}!
+        // seems to be a combination of offset + limit
+        // somewhat related to ArrayUtil.MAX_ARRAY_LENGTH but not completely?
+        // TODO: check negative params?
+        return Integer.MAX_VALUE >= (offset + limit);
+    }
+
     public SearchResultSet search(String query, String collection, long offset, int limit) {
         @SuppressWarnings("serial")
         final MapSolrParams queryParams = new MapSolrParams(new HashMap<String, String>() {
