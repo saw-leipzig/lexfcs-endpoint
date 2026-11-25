@@ -40,22 +40,27 @@ TEMPLATE_DIR=template_datadir
 CORES=($(find $IMPORTDATA_DIR/ -maxdepth 1 -mindepth 1 -type d -exec basename {} \;))
 _head "Found ${#CORES[@]} cores for data..."
 for core in "${CORES[@]}"; do
-    if [[ ! -f "$IMPORTDATA_DIR/$core/$core.xml" ]]; then
-        _warn "No documents for core '$core' to import?"
-        continue
-    fi
     if [[ ! -d "$TEMPLATE_DIR/data/$core/" ]]; then
         _warn "No configuration for core '$core'?"
         continue
     fi
-    _info "Import documents into core '$core'"
-    _run_cmd "docker run --rm -v "$PWD/$IMPORTDATA_DIR:/import_data" --network=host solr:9.1 post -u $SOLR_SETUP_USER:$SOLR_SETUP_PASS -c $core /import_data/$core/$core.xml"
-    status=$?
-    if [[ $status -ne 0 ]]; then
-        _warn "Failure to import core '$core' data! Exit status=$status. Aborting!"
-        _info "Often times it is enough to just run the 'startup.sh' command again. The first time seems to fail after longer periods of runtime."
-        exit 1
+    declare -a SOLR_XMLS=( $(find "$IMPORTDATA_DIR/$core/" -type f -name "$core.xml") $(find "$IMPORTDATA_DIR/$core/" -type f -iname "*.solr.xml") )
+    if [[ ${#SOLR_XMLS[@]} -eq 0 ]]; then
+        _warn "No documents for core '$core' to import?"
+        continue
     fi
+    _info "Import documents from ${#SOLR_XMLS[@]} file(s) into core '$core'"
+    for xmlfile in "${SOLR_XMLS[@]}"; do
+        _debug "Importing document '$xmlfile' ..."
+        xmlfile="$(basename "$xmlfile")"
+        _run_cmd "docker run --rm -v "$PWD/$IMPORTDATA_DIR:/import_data" --network=host solr:9.1 post -u $SOLR_SETUP_USER:$SOLR_SETUP_PASS -c $core /import_data/$core/$xmlfile"
+        status=$?
+        if [[ $status -ne 0 ]]; then
+            _warn "Failure to import file '$xmlfile' into core '$core' data! Exit status=$status. Aborting!"
+            _info "Often times it is enough to just run the 'startup.sh' command again. The first time seems to fail after longer periods of runtime."
+            exit 1
+        fi
+    done
 done
 
 # ##########################################################################
