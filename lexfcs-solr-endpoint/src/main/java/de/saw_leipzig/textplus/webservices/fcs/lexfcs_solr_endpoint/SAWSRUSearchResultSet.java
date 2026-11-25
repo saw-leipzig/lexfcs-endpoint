@@ -187,10 +187,15 @@ public class SAWSRUSearchResultSet extends SRUSearchResultSet {
         // ---------------------------
 
         addValues(helper, "case", result.getCase(), null);
-        addValues(helper, "number", result.getNumber(), null);
+        addValues(helper, "degree", result.getDegree(), null);
         addValues(helper, "gender", result.getGender(), null);
+        addValues(helper, "mood", result.getMood(), null);
+        addValues(helper, "number", result.getNumber(), null);
+        addValues(helper, "tense", result.getTense(), null);
 
         addValues(helper, "pos", result.getPos(), null);
+
+        addValues(helper, "grammar", result.getGrammar(), null);
 
         addValues(helper, "baseform", result.getBaseform(), null);
         addValues(helper, "segmentation", result.getSegmentation(), null);
@@ -203,10 +208,10 @@ public class SAWSRUSearchResultSet extends SRUSearchResultSet {
         // ---------------------------
 
         addValues(helper, "antonym", result.getAntonym(), null);
-        addValues(helper, "hyponym", result.getHyponym(), null);
-        addValues(helper, "hypernym", result.getHypernym(), null);
-        addValues(helper, "meronym", result.getMeronym(), null);
         addValues(helper, "holonym", result.getHolonym(), null);
+        addValues(helper, "hypernym", result.getHypernym(), null);
+        addValues(helper, "hyponym", result.getHyponym(), null);
+        addValues(helper, "meronym", result.getMeronym(), null);
         addValues(helper, "synonym", result.getSynonym(), null);
         addValues(helper, "related", result.getRelated(), null);
 

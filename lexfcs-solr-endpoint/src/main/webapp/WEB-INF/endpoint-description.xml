@@ -13,6 +13,8 @@
         <SupportedDataView id="lex" delivery-policy="send-by-default">application/x-clarin-fcs-lex+xml</SupportedDataView>
     </SupportedDataViews>
     <SupportedLexFields>
+        <!-- virtual field, describing all the fields in an entry -->
+        <SupportedLexField id="any">any</SupportedLexField>
         <!-- virtual field, describing the entry's language -->
         <SupportedLexField id="lang">lang</SupportedLexField>
         <!-- lex value field types -->
@@ -23,19 +25,23 @@
         <SupportedLexField id="phonetic">phonetic</SupportedLexField>
         <SupportedLexField id="definition">definition</SupportedLexField>
         <SupportedLexField id="etymology">etymology</SupportedLexField>
+        <SupportedLexField id="grammar">grammar</SupportedLexField>
         <SupportedLexField id="case">case</SupportedLexField>
-        <SupportedLexField id="number">number</SupportedLexField>
+        <SupportedLexField id="degree">degree</SupportedLexField>
         <SupportedLexField id="gender">gender</SupportedLexField>
+        <SupportedLexField id="mood">mood</SupportedLexField>
+        <SupportedLexField id="number">number</SupportedLexField>
         <SupportedLexField id="pos">pos</SupportedLexField>
+        <SupportedLexField id="tense">tense</SupportedLexField>
         <SupportedLexField id="baseform">baseform</SupportedLexField>
         <SupportedLexField id="segmentation">segmentation</SupportedLexField>
         <SupportedLexField id="sentiment">sentiment</SupportedLexField>
         <SupportedLexField id="frequency">frequency</SupportedLexField>
         <SupportedLexField id="antonym">antonym</SupportedLexField>
-        <SupportedLexField id="hyponym">hyponym</SupportedLexField>
-        <SupportedLexField id="hypernym">hypernym</SupportedLexField>
-        <SupportedLexField id="meronym">meronym</SupportedLexField>
         <SupportedLexField id="holonym">holonym</SupportedLexField>
+        <SupportedLexField id="hypernym">hypernym</SupportedLexField>
+        <SupportedLexField id="hyponym">hyponym</SupportedLexField>
+        <SupportedLexField id="meronym">meronym</SupportedLexField>
         <SupportedLexField id="synonym">synonym</SupportedLexField>
         <SupportedLexField id="related">related</SupportedLexField>
         <SupportedLexField id="ref">ref</SupportedLexField>

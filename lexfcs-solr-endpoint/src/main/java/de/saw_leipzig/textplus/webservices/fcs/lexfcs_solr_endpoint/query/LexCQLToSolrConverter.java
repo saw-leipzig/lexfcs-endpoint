@@ -102,7 +102,8 @@ public class LexCQLToSolrConverter {
         String relation = (rel != null) ? rel.getRelation().toLowerCase() : null;
 
         // check and normalize field spelling (in case it is not quite to spec)
-        switch (field.toLowerCase()) {
+        field = field.toLowerCase();
+        switch (field) {
             // "known" alias field names
             case "def":
                 field = "definition";
@@ -116,6 +117,11 @@ public class LexCQLToSolrConverter {
             case "senseref":
                 field = "senseRef";
                 break;
+
+            // "any" field
+            case "any":
+                break;
+
             // nothing to do
             case "lemma":
             case "translation":
@@ -124,9 +130,13 @@ public class LexCQLToSolrConverter {
             case "definition":
             case "etymology":
             case "case":
-            case "number":
+            case "degree":
             case "gender":
+            case "mood":
+            case "number":
             case "pos":
+            case "tense":
+            case "grammar":
             case "baseform":
             case "segmentation":
             case "sentiment":
