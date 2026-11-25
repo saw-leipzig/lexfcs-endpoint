@@ -53,7 +53,7 @@ for core in "${CORES[@]}"; do
     for xmlfile in "${SOLR_XMLS[@]}"; do
         _debug "Importing document '$xmlfile' ..."
         xmlfile="$(basename "$xmlfile")"
-        _run_cmd "docker run --rm -v "$PWD/$IMPORTDATA_DIR:/import_data" --network=host solr:9.1 post -u $SOLR_SETUP_USER:$SOLR_SETUP_PASS -c $core /import_data/$core/$xmlfile"
+        _run_cmd "docker run --rm -v "$PWD/$IMPORTDATA_DIR:/import_data" --network=host alpine/curl --user $SOLR_SETUP_USER:$SOLR_SETUP_PASS http://localhost:8983/solr/${core}/update?commit=true -H 'Content-Type: text/xml' --data-binary @/import_data/$core/$xmlfile"
         status=$?
         if [[ $status -ne 0 ]]; then
             _warn "Failure to import file '$xmlfile' into core '$core' data! Exit status=$status. Aborting!"

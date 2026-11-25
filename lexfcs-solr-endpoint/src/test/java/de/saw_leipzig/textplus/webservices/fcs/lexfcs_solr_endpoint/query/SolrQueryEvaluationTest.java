@@ -29,10 +29,10 @@ import org.apache.lucene.search.QueryVisitor;
 import org.apache.lucene.search.join.ToParentBlockJoinQuery;
 import org.apache.lucene.util.automaton.ByteRunAutomaton;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.client.solrj.request.CoreAdminRequest;
+import org.apache.solr.client.solrj.request.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrException;
@@ -515,11 +515,11 @@ public class SolrQueryEvaluationTest {
         BooleanQuery child = (BooleanQuery) pbjq.getChildQuery(); // +(+_type:value_* +value:Spinne)
         BooleanClause clause = child.clauses().get(0); // ++_type:value_* +value:Spinne
 
-        BooleanQuery bq = (BooleanQuery) clause.getQuery(); // +_type:value_* +value:Spinne
+        BooleanQuery bq = (BooleanQuery) clause.query(); // +_type:value_* +value:Spinne
         BooleanClause clause_type = bq.clauses().get(0); // +_type:value_*
         BooleanClause clause_value = bq.clauses().get(1); // +value:Spinne
 
-        PrefixQuery pq_type = (PrefixQuery) clause_type.getQuery(); // _type:value_*
+        PrefixQuery pq_type = (PrefixQuery) clause_type.query(); // _type:value_*
         String field = pq_type.getPrefix().field(); // "_type"
         String text = pq_type.getPrefix().text(); // "value_"
 

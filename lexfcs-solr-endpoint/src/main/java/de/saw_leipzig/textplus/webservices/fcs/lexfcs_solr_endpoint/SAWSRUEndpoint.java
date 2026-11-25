@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +40,7 @@ import eu.clarin.sru.server.fcs.ResourceInfo;
 import eu.clarin.sru.server.fcs.SimpleEndpointSearchEngineBase;
 import eu.clarin.sru.fcs.qlparser.QueryParserException;
 import eu.clarin.sru.server.fcs.utils.SimpleEndpointDescriptionParser;
+import jakarta.servlet.ServletContext;
 
 public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
     private static final Logger LOGGER = LogManager.getLogger(SAWSRUEndpoint.class);

@@ -19,10 +19,10 @@ import org.apache.lucene.tests.util.QuickPatchThreadsFilter;
 import org.apache.solr.SolrIgnoredThreadsFilter;
 import org.apache.solr.SolrTestCase;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.request.AbstractUpdateRequest;
 import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
+import org.apache.solr.client.solrj.request.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.CommonParams;
 import org.apache.solr.common.util.NamedList;
@@ -52,6 +52,8 @@ import eu.clarin.sru.server.SRUException;
 @ThreadLeakFilters(defaultFilters = true, filters = { SolrIgnoredThreadsFilter.class, QuickPatchThreadsFilter.class })
 @ThreadLeakLingering(linger = 1000)
 public abstract class SolrQueryRegressionsTestBase extends LuceneTestCase {
+    // https://github.com/apache/solr/blob/main/solr/solrj/src/test/org/apache/solr/client/solrj/embedded/AbstractEmbeddedSolrServerTestCase.java
+    // https://github.com/apache/solr/blob/main/solr/test-framework/src/java/org/apache/solr/SolrTestCase.java
 
     protected static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -100,7 +102,7 @@ public abstract class SolrQueryRegressionsTestBase extends LuceneTestCase {
         log.debug("SOLR_HOME = {}", SOLR_HOME);
 
         solrTestRule.startSolr(SOLR_HOME);
-        solrTestRule.newCollection().withConfigSet(CONFIG_HOME.toString()).create();
+        solrTestRule.newCollection().withConfigSet(CONFIG_HOME).create();
     }
 
     // ---------------------------------------------------------------------
@@ -192,7 +194,7 @@ public abstract class SolrQueryRegressionsTestBase extends LuceneTestCase {
         }
 
         ContentStreamUpdateRequest req = new ContentStreamUpdateRequest("/update");
-        req.addFile(documents.toFile(), "application/xml");
+        req.addFile(documents, "application/xml");
         req.setParam(CommonParams.HEADER_ECHO_PARAMS, CommonParams.EchoParamStyle.ALL.toString());
         req.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
         NamedList<Object> result = solrClient.request(req);
