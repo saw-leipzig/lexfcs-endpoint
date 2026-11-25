@@ -16,6 +16,8 @@ import org.apache.solr.client.solrj.response.CoreAdminResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.params.CoreAdminParams.CoreAdminAction;
+import org.apache.solr.common.params.CommonParams;
+import org.apache.solr.common.params.HighlightParams;
 import org.apache.solr.common.params.MapSolrParams;
 import org.apache.solr.common.util.NamedList;
 
@@ -72,29 +74,28 @@ public class Searcher {
     }
 
     public SearchResultSet search(String query, String collection, long offset, int limit) {
-        @SuppressWarnings("serial")
         final MapSolrParams queryParams = new MapSolrParams(new HashMap<String, String>() {
             {
                 // https://solr.apache.org/guide/solr/latest/query-guide/standard-query-parser.html
-                put("q", query);
+                put(CommonParams.Q, query);
                 // put("q.op", "OR");
-                // put("df", "dataview_hits");
+                // put(CommonParams.DF, "dataview_hits");
 
                 // return child documents!
-                put("fl", "*,[child]");
+                put(CommonParams.FL, "*,[child]");
 
                 // pagination
                 // https://solr.apache.org/guide/solr/latest/query-guide/pagination-of-results.html
-                put("start", String.valueOf(offset)); // starts with 0
-                put("rows", String.valueOf(limit));
+                put(CommonParams.START, String.valueOf(offset)); // starts with 0
+                put(CommonParams.ROWS, String.valueOf(limit));
 
                 // highlighting
                 // https://solr.apache.org/guide/solr/latest/query-guide/highlighting.html
-                put("hl", "true");
-                put("hl.fl", "dataview_hits"); // only highlight on "dataview_hits"
-                put("hl.fragsize", "0"); // whole field
-                put("hl.simple.pre", "<Hit>"); // no prefix so that we can parse more easily
-                put("hl.simple.post", "</Hit>");
+                put(HighlightParams.HIGHLIGHT, "true");
+                put(HighlightParams.FIELDS, "dataview_hits"); // only highlight on "dataview_hits"
+                put(HighlightParams.FRAGSIZE, "0"); // whole field
+                put(HighlightParams.SIMPLE_PRE, "<Hit>"); // no prefix so that we can parse more easily
+                put(HighlightParams.SIMPLE_POST, "</Hit>");
             }
         });
 
