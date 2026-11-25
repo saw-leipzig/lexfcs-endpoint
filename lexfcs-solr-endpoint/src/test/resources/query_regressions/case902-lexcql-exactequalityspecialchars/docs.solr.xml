@@ -1,0 +1,91 @@
+<add>
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">Starosta-3-abejcej-0-abejcej</field>
+      <field name="xmlLang">dsb</field>
+      <field name="landingpage">https://niedersorbisch.de/ndw/pokaz/Starosta/abejcej/abejcej</field>
+      <field name="dataview_hits">abejcej: Abc , Alphabet</field>
+      <field name="dataview_lexhits">&lt;Hit kind="lex-lemma"&gt;abejcej&lt;/Hit&gt;</field>
+      <field name="values">
+         <doc>
+            <field name="_type">value_entryId</field>
+            <field name="value">Starosta-3-abejcej-0-abejcej</field>
+         </doc>
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">abejcej</field>
+            <field name="preferred">true</field>
+         </doc>
+      </field>
+   </doc>
+   <!-- abc se -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">case902:02</field>
+      <field name="xmlLang">dsb</field>
+      <field name="dataview_hits"></field>
+      <field name="dataview_lexhits"></field>
+      <field name="values">
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">abc se</field>
+         </doc>
+      </field>
+   </doc>
+   <!-- abc se def -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">case902:03</field>
+      <field name="xmlLang">dsb</field>
+      <field name="dataview_hits"></field>
+      <field name="dataview_lexhits"></field>
+      <field name="values">
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">abc se def</field>
+         </doc>
+      </field>
+   </doc>
+   <!-- se def -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">case902:04</field>
+      <field name="xmlLang">dsb</field>
+      <field name="dataview_hits"></field>
+      <field name="dataview_lexhits"></field>
+      <field name="values">
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">se def</field>
+         </doc>
+      </field>
+   </doc>
+   <!-- abc def -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">case902:05</field>
+      <field name="xmlLang">dsb</field>
+      <field name="dataview_hits"></field>
+      <field name="dataview_lexhits"></field>
+      <field name="values">
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">abc def</field>
+         </doc>
+      </field>
+   </doc>
+   <!-- se -->
+   <doc>
+      <field name="_type">entry</field>
+      <field name="xmlId">case902:06</field>
+      <field name="xmlLang">dsb</field>
+      <field name="dataview_hits"></field>
+      <field name="dataview_lexhits"></field>
+      <field name="values">
+         <doc>
+            <field name="_type">value_lemma</field>
+            <field name="value">se</field>
+         </doc>
+      </field>
+   </doc>
+</add>

@@ -1,0 +1,53 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case122:01</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">A green mouse dashes across a hill</field>
+        <field name="dataview_lexhits">A green mouse dashes across a hill</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case122:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">A green mouse dashes across a hill</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case122:02</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">There are no mice with green fur</field>
+        <field name="dataview_lexhits">There are no mice with green fur</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case122:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">There are no mice with green fur</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case122:03</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">There is no mouse with green fur</field>
+        <field name="dataview_lexhits">There is no mouse with green fur</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case122:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">There is no mouse with green fur</field>
+            </doc>
+        </field>
+    </doc>
+</add>

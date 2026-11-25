@@ -1,0 +1,86 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case171:01</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">Leaded rivers</field>
+        <field name="dataview_lexhits">Leaded rivers</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case171:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">lead</field>
+            </doc>
+            <doc>
+                <field name="_type">value_definition</field>
+                <field name="value">Something that should not be in a river.</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case171:02</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">Lead pain</field>
+        <field name="dataview_lexhits">Lead pain</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case171:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">lead</field>
+            </doc>
+            <doc>
+                <field name="_type">value_definition</field>
+                <field name="value">Used in some paints</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case171:03</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">River Water</field>
+        <field name="dataview_lexhits">River Water</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case171:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">water</field>
+            </doc>
+            <doc>
+                <field name="_type">value_definition</field>
+                <field name="value">A fluid found in a river or sea.</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case171:04</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">Lead River</field>
+        <field name="dataview_lexhits">Lead River</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case171:04</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">lead</field>
+            </doc>
+            <doc>
+                <field name="_type">value_etymology</field>
+                <field name="value">Word was created to describe black water</field>
+            </doc>
+        </field>
+    </doc>
+</add>

@@ -1,0 +1,61 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case322:01</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">car</field>
+        <field name="dataview_lexhits">car</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case322:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">car</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case322:02</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">other</field>
+        <field name="dataview_lexhits">other</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case322:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">other</field>
+            </doc>
+            <doc>
+                <field name="_type">value_description</field>
+                <field name="value">Something with a car in it.</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case322:03</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">other</field>
+        <field name="dataview_lexhits">other</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case322:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">other</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">card</field>
+            </doc>
+        </field>
+    </doc>
+</add>

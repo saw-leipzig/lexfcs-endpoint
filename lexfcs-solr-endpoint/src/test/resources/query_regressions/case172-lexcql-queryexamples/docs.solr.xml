@@ -1,0 +1,67 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case172:01</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">driven</field>
+        <field name="dataview_lexhits">driven</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case172:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">driven</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">verb</field>
+                <field name="vocabValueRef">https://universaldependencies.org/u/pos/VERB</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case172:02</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">driven</field>
+        <field name="dataview_lexhits">driven</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case172:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">driven</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">VERB</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case172:03</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">driving</field>
+        <field name="dataview_lexhits">driving</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case172:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">driving</field>
+            </doc>
+            <doc>
+                <field name="_type">value_pos</field>
+                <field name="value">VERB</field>
+                <field name="vocabValueRef">https://universaldependencies.org/u/pos/VERB</field>
+            </doc>
+        </field>
+    </doc>
+</add>

@@ -1,0 +1,106 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case177:01</field>
+        <field name="xmlLang">de</field>
+        <field name="dataview_hits">Auto</field>
+        <field name="dataview_lexhits">Auto</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case177:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Auto</field>
+            </doc>
+            <doc>
+                <field name="_type">value_translation</field>
+                <field name="xmlLang">en</field>
+                <field name="value">car</field>
+            </doc>
+            <doc>
+                <field name="_type">value_translation</field>
+                <field name="xmlLang">fr</field>
+                <field name="value">voiture</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case177:02</field>
+        <field name="xmlLang">de</field>
+        <field name="dataview_hits">Auto</field>
+        <field name="dataview_lexhits">Auto</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case177:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <!-- missing language code on sub field -->
+                <field name="value">Auto</field>
+            </doc>
+            <doc>
+                <field name="_type">value_translation</field>
+                <field name="xmlLang">fr</field>
+                <field name="value">voiture</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case177:03</field>
+        <field name="xmlLang">de</field>
+        <field name="dataview_hits">Auto</field>
+        <field name="dataview_lexhits">Auto</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case177:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Auto</field>
+            </doc>
+            <doc>
+                <field name="_type">value_translation</field>
+                <!-- missing language code on sub field -->
+                <field name="value">car</field>
+            </doc>
+            <doc>
+                <field name="_type">value_translation</field>
+                <field name="value">voiture</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case177:04</field>
+        <!-- no language code on entry -->
+        <field name="dataview_hits">Auto</field>
+        <field name="dataview_lexhits">Auto</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case177:04</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="xmlLang">de</field>
+                <field name="value">Auto</field>
+            </doc>
+            <doc>
+                <field name="_type">value_translation</field>
+                <field name="xmlLang">en</field>
+                <field name="value">car</field>
+            </doc>
+            <doc>
+                <field name="_type">value_translation</field>
+                <field name="xmlLang">fr</field>
+                <field name="value">voiture</field>
+            </doc>
+        </field>
+    </doc>
+</add>

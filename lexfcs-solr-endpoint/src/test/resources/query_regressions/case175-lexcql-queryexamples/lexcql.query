@@ -1,0 +1,1 @@
+emma ==/lang=de/ignoreCase/ignoreAccents "Grüße" OR definition =/regexp "^[Gg]r(ue|ü|u)[sßz]+e$"

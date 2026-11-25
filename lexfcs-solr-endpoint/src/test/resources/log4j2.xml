@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <!-- <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" /> -->
+            <PatternLayout
+                pattern="%style{%d{HH:mm:ss.SSS}}{dim} %highlight{%-5level} %style{%logger{1.}}{bright,yellow}: %msg%n" />
+        </Console>
+        <Console name="ConsoleSolrRegressionCases" target="SYSTEM_OUT">
+            <PatternLayout
+                pattern="%style{%d{HH:mm:ss.SSS}}{dim} %highlight{%-5level} %style{%logger{1.}}{bright,yellow}.%style{%method}{bold}%notEmpty{ [%style{%X{test.case}}{red}]}: %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+        </Root>
+
+        <!-- <Logger name="org.apache.solr" level="warn" /> -->
+
+        <!-- verbose stuff -->
+        <Logger name="org.apache.solr.core.CorePropertiesLocator" level="warn" />
+        <Logger name="org.apache.solr.core.NodeConfig" level="off" />
+        <Logger name="org.apache.solr.core.QuerySenderListener" level="warn" />
+        <Logger name="org.apache.solr.core.SolrConfig" level="warn" />
+        <Logger name="org.apache.solr.handler.component.SpellCheckComponent" level="warn" />
+        <Logger name="org.apache.solr.handler.ReplicationHandler" level="warn" />
+        <Logger name="org.apache.solr.jersey" level="warn" />
+        <Logger name="org.apache.solr.metrics" level="warn" />
+        <Logger name="org.apache.solr.rest.ManagedResourceStorage" level="warn" />
+        <Logger name="org.apache.solr.schema.IndexSchema" level="warn" />
+        <Logger name="org.apache.solr.schema.ManagedIndexSchema" level="warn" />
+        <Logger name="org.apache.solr.spelling.DirectSolrSpellChecker" level="warn" />
+        <Logger name="org.apache.solr.update.CommitTracker" level="warn" />
+        <Logger name="org.apache.solr.update.UpdateHandler" level="warn" />
+        <Logger name="org.apache.solr.update.UpdateLog" level="off" />
+        <Logger name="org.apache.solr.util.tracing.SimplePropagator" level="warn" />
+
+        <!-- deprecation -->
+        <Logger name="org.apache.solr.util.circuitbreaker" level="off" />
+        <Logger name="org.apache.solr.DEPRECATED" level="off" />
+
+        <!-- general management -->
+        <Logger name="org.apache.solr.core.CoreContainer" level="off" />
+        <Logger name="org.apache.solr.core.SolrCore" level="warn" />
+        <Logger name="org.apache.solr.handler.admin.CoreAdminOperation" level="warn" />
+        <Logger name="org.apache.solr.update.DirectUpdateHandler2" level="warn" />
+
+        <!-- requests -->
+        <Logger name="org.apache.solr.core.SolrCore.Request" level="warn" />
+        <Logger name="org.apache.solr.update.processor.LogUpdateProcessorFactory" level="warn" />
+
+        <!-- debug? -->
+        <Logger
+            name="de.saw_leipzig.textplus.webservices.fcs.lexfcs_solr_endpoint.query.regression.SolrQueryRegressionsTestBase"
+            level="info" additivity="false">
+            <AppenderRef ref="ConsoleSolrRegressionCases" />
+        </Logger>
+    </Loggers>
+</Configuration>

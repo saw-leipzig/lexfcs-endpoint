@@ -1,0 +1,12 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">case001b:01</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">leaf</field>
+            </doc>
+        </field>
+    </doc>
+</add>
