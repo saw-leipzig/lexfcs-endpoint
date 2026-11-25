@@ -1,12 +1,15 @@
 services:
   endpoint:
     container_name: lexfcs-endpoint
+    env_file: .env
     environment:
       - SOLR_URL=http://solr:8983/solr
     networks:
       - lexfcs-solr-nw
     restart: always
     ports:
+      # format: [<public-ip-or-global-0.0.0.0>:]<public-port>:<internal-port>
+      # public port: 8189
       - 8189:8080
 
 networks:

@@ -9,6 +9,21 @@ One Solr Core represents a single lexical resource. Each lexical resource contai
 - Requires `docker` and `docker compose`.
 - Will use [**Solr 9.1**](https://solr.apache.org/guide/solr/9_1/index.html).
 
+## Run with docker compose
+
+```bash
+# copy example configuration
+cp docker-compose.override.yml.template docker-compose.override.yml
+```
+
+Pulling the image (no building required):
+
+```bash
+docker compose pull
+```
+
+**NOTE**: It is not recommended to run Solr directly via the `docker compose up` command but to use the custom [`startup.sh`](./startup.sh) script! It will automatically stop running instances, recreate cores and spin up a new instance.
+
 ## Setup
 
 The script `create-core-from-solr-defaults.sh` has been used to create a template Solr core configuration. It should not be necessary to use this script anymore except to create a new template in the future.
@@ -16,7 +31,7 @@ The Solr Core template is basically unchanged except the [`conf/managed-schema.x
 
 ## Core Creation
 
-The Solr Core template is stored in `template_datadir/data/_base/` and will be used for all Solr cores. New Core creation will use this `_base/` directory and copy all files and folders. Custom _overlays_ to overwrite files can be created for a core (e.g., [`test_wiktionary-en`](template_datadir/data/test_wiktionary-en/)) and will simply be copied over the base configuration. If no overrides are required, create an emty folder. Each folder will result in a Solr core.
+The Solr Core template is stored in `template_datadir/data/_base/` and will be used for all Solr cores. New Core creation will use this `_base/` directory and copy all files and folders. Custom _overlays_ to overwrite files can be created for a core (e.g., [`test_wiktionary-en`](template_datadir/data/test_wiktionary-en/)) and will simply be copied over the base configuration. If no overrides are required, create an empty folder. Each folder will result in a Solr core.
 
 See script [`create-cores-from-template.sh`](create-cores-from-template.sh) for details.
 

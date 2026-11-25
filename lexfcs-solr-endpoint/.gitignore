@@ -4,3 +4,4 @@ ${sys:catalina.base}/logs/
 .vscode/settings.json
 
 .env
+docker-compose.override.yml

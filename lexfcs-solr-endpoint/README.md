@@ -28,6 +28,11 @@ docker run --rm -it -p 8080:8080 --env-file .env lexfcs-solr-endpoint
 
 See configuration at [Configuration](#configuration).
 
+```bash
+# copy example configuration
+cp docker-compose.override.yml.template docker-compose.override.yml
+```
+
 Building:
 
 ```bash
