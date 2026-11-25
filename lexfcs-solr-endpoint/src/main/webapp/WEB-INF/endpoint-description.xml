@@ -6,6 +6,7 @@
     <Capabilities>
         <Capability>http://clarin.eu/fcs/capability/basic-search</Capability>
         <Capability>http://clarin.eu/fcs/capability/lex-search</Capability>
+        <Capability>http://clarin.eu/fcs/capability/lexical-search/1.0</Capability>
     </Capabilities>
     <SupportedDataViews>
         <SupportedDataView id="hits" delivery-policy="send-by-default">application/x-clarin-fcs-hits+xml</SupportedDataView>

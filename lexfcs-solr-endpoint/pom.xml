@@ -8,7 +8,7 @@
     <version>1.1.0</version>
     <packaging>war</packaging>
     <name>${project.artifactId}</name>
-    <description>A FCS 2.0 endpoint with Solr backend for lexical resources.</description>
+    <description>A LexFCS 2 endpoint with Solr backend for lexical resources.</description>
 
     <properties>
         <!-- project settings -->
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>eu.clarin.sru.fcs</groupId>
             <artifactId>fcs-simple-endpoint</artifactId>
-            <version>2.0.0</version>
+            <version>2.1.1</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jackson-core</artifactId>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>eu.clarin.sru.fcs</groupId>
             <artifactId>fcs-ql</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0</version>
         </dependency>
 
         <dependency>
