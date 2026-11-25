@@ -1,5 +1,10 @@
 package de.saw_leipzig.textplus.webservices.fcs.lexfcs_solr_endpoint.query;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -67,16 +72,9 @@ public class LexCQLToSolrConverter {
 
         String field = sc.getIndex();
 
-        // no field provided, search everywhere
+        // no field provided, search on lemma
         if (field == null || "cql.serverChoice".equalsIgnoreCase(field)) {
-            sb.append("({!parent which=\"_type:entry\" v=\"");
-            sb.append("+_type:value_*");
-            sb.append(' ');
-            // NOTE: leave it as is, quoting seems to work?
-            sb.append("+value_text:").append(getEscapedSearchTerm(sc.getSearchTerm(), false, true));
-            sb.append("\"})");
-
-            return sb.toString();
+            field = "lemma";
         }
 
         // virtual language field (language of entry)
@@ -84,22 +82,19 @@ public class LexCQLToSolrConverter {
             sb.append('(');
             sb.append("_type:entry AND xmlLang:");
             // plain string (only escape minus "-" if it appears)
-            sb.append(escapeSearchTerm(sc.getSearchTerm(), false));
+            sb.append(Utils.escapeValue(sc.getSearchTerm()));
             sb.append(')');
             return sb.toString();
         }
 
         // check if known relations
         final Relation rel = sc.getRelation();
-        if (rel != null) {
-            if (!"=".equals(rel.getRelation()) && !"<>".equals(rel.getRelation()) && !"==".equals(rel.getRelation())
-                    && !"is".equals(rel.getRelation())) {
-                throw new SRUException(SRUConstants.SRU_CANNOT_PROCESS_QUERY_REASON_UNKNOWN,
-                        "Queries with queryType 'lex' do not support '" + rel.getRelation()
-                                + "' relations at this FCS Endpoint.");
-            }
+        final String relation = (rel != null) ? rel.getRelation().toLowerCase() : "=";
+        if (!"=".equals(relation) && !"<>".equals(relation) && !"==".equals(relation) && !"is".equals(relation)) {
+            throw new SRUException(SRUConstants.SRU_UNSUPPORTED_RELATION,
+                    "Queries with queryType 'lex' do not support '" + rel.getRelation()
+                            + "' relations at this FCS Endpoint.");
         }
-        String relation = (rel != null) ? rel.getRelation().toLowerCase() : null;
 
         // check and normalize field spelling (in case it is not quite to spec)
         field = field.toLowerCase();
@@ -155,24 +150,34 @@ public class LexCQLToSolrConverter {
             // error case?
             default:
                 throw new SRUException(
-                        SRUConstants.SRU_CANNOT_PROCESS_QUERY_REASON_UNKNOWN,
+                        SRUConstants.SRU_UNSUPPORTED_INDEX,
                         "Queries with queryType 'lex' do not (yet) support the unknown field '" + field
                                 + "' at this FCS Endpoint.");
         }
+
+        // -------------------------------------
 
         // start building the generic query
         sb.append("({!parent");
         sb.append(" which=\"_type:entry\"");
         sb.append(' ').append("v=\""); // start of block query
 
-        // type of field
-        sb.append("+_type:value_").append(field);
+        // # type of field
+        // if "any" field provided, then do not filter and search everywhere
+        if (!"any".equalsIgnoreCase(field)) {
+            sb.append("+_type:value_").append(field);
+        }
 
-        // attributes
-        if (rel.getModifiers() != null && !rel.getModifiers().isEmpty()) {
+        // # attributes
+        boolean hasRegexpModifier = false;
+        if (rel != null && rel.getModifiers() != null && !rel.getModifiers().isEmpty()) {
             // "is" is without any relation modifiers!
+            // TODO: still correct?
             if ("is".equals(relation)) {
-                throw new SRUException(SRUConstants.SRU_CANNOT_PROCESS_QUERY_REASON_UNKNOWN,
+                // - ignorecase/respectcase could make sense
+                // - regexp ... well maybe but is a bit more complicated
+                // - *accents/lang do not make sense
+                throw new SRUException(SRUConstants.SRU_UNSUPPORTED_RELATION_MODIFIER,
                         "Queries with queryType 'lex' do not (yet?) support relation modifiers on the '"
                                 + relation
                                 + "' relation at this FCS Endpoint.");
@@ -196,65 +201,146 @@ public class LexCQLToSolrConverter {
                         sb.append(" ").append("+xmlLang:").append(modifier.getValue().trim());
                         break;
 
-                    case "masked":
-                        // default, ignore
+                    case "regexp":
+                        // just a sanity check
+                        if ("=".equalsIgnoreCase(relation)) {
+                            throw new SRUException(
+                                    SRUConstants.SRU_UNSUPPORTED_RELATION_MODIFIER,
+                                    "Queries with queryType 'lex' do not support the relation modifier '"
+                                            + modifierName + "' with the '=' relations at this FCS Endpoint.");
+                        }
+                        hasRegexpModifier = true;
                         break;
 
                     // as of yet, unsupported
-                    case "unmasked":
                     case "ignorecase":
                     case "respectcase":
+                        // NOTE: could work with regexp modifier
+                        // TODO: need to test how indexing (with lowercase) influences this
                     case "ignoreaccents":
                     case "respectaccents":
-                    case "honorwhitespace":
-                    case "regexp":
-                    case "partialmatch":
-                    case "fullmatch":
+                        // NOTE: we don't really want to combine those with regexp
                         throw new SRUException(
-                                SRUConstants.SRU_CANNOT_PROCESS_QUERY_REASON_UNKNOWN,
+                                SRUConstants.SRU_UNSUPPORTED_RELATION_MODIFIER,
                                 "Queries with queryType 'lex' do not (yet) support the relation modifier '"
                                         + modifierName + "' at this FCS Endpoint.");
 
+                    case "masked":
+                    case "unmasked":
+                    case "honorwhitespace":
+                    case "partialmatch":
+                    case "fullmatch":
+                        // TODO: hard error or silent warning?
+                        throw new SRUException(
+                                SRUConstants.SRU_UNSUPPORTED_RELATION_MODIFIER,
+                                "Queries with queryType 'lex' do not support the relation modifier '"
+                                        + modifierName + "' (prior to LexFCS 1.0) at this FCS Endpoint.");
                     default:
                         throw new SRUException(
-                                SRUConstants.SRU_CANNOT_PROCESS_QUERY_REASON_UNKNOWN,
+                                SRUConstants.SRU_UNSUPPORTED_RELATION_MODIFIER,
                                 "Queries with queryType 'lex' do not (yet) support the unknown relation modifier '"
                                         + modifierName + "' at this FCS Endpoint.");
                 }
             }
         }
 
-        // "is" relation only on vocabValueRef
-        if ("is".equalsIgnoreCase(relation)) {
-            sb.append(' ');
-            sb.append('+');
-            sb.append("vocabValueRef:");
-            // NOTE: simple quoting (with escaping) is enough here
-            sb.append(getEscapedSearchTerm(sc.getSearchTerm(), true, true));
+        // -------------------------------------
 
-            sb.append('"'); // v="
-            sb.append("})"); // ({!parent
-            return sb.toString();
-        }
+        // # other relations, value handling
 
-        // other relations, value handling
-
-        // TODO: handle other relation modifiers
         char operator = '+';
-        if ("=".equals(relation) || "==".equals(relation)) {
+        String searchField = "value_text";
+        String searchValue = sc.getSearchTerm();
+        List<String> searchValues = Collections.emptyList();
+
+        if ("=".equals(relation)) {
             operator = '+';
+            searchField = "value_text";
+
+            // TODO: special handling required if ":" contained due to field tokenization?
+            // TODO: in general for all fields when value contains certain characters?
+            // TODO: other fields
+            // NOTE: this is more or less a hack
+            if ("entryid".equalsIgnoreCase(field) || "senseref".equalsIgnoreCase(field)
+                    || "ref".equalsIgnoreCase(field)) {
+                searchValue = Utils.escapeValue(searchValue, true);
+                searchValue = "\\\"" + searchValue + "\\\"";
+                searchValues = List.of(searchValue);
+            } else {
+                // TODO: this might not be the best tokenization as Solr might also split on
+                // punctuation, too!
+                final String[] tokens = Utils.tokenizeValue(searchValue);
+                searchValues = Arrays.asList(tokens).stream()
+                        .map(value -> Utils.escapeValue(value, true))
+                        .collect(Collectors.toList());
+            }
+        } else if ("==".equals(relation)) {
+            operator = '+';
+            searchField = "value";
+
+            if (hasRegexpModifier) {
+                searchValue = Utils.escapeRegexpValue(searchValue);
+                searchValue = searchValue.replace(" ", "\\ ");
+                // TODO: do we need to escape backslashes again?
+                // searchValue = searchValue.replace("\\", "\\\\");
+                // searchValue = "\\\"" + searchValue + "\\\"";
+            } else {
+                searchValue = Utils.escapeValue(searchValue, true);
+            }
+            searchValues = List.of(searchValue);
         } else if ("<>".equals(relation)) {
             operator = '-';
+            searchField = "value";
+
+            if (hasRegexpModifier) {
+                searchValue = Utils.escapeRegexpValue(searchValue);
+                searchValue = searchValue.replace(" ", "\\ ");
+                // same as "=="
+            } else {
+                searchValue = Utils.escapeValue(searchValue);
+            }
+            searchValues = List.of(searchValue);
+        } else if ("is".equalsIgnoreCase(relation)) {
+            // "is" relation only on vocabValueRef
+            operator = '+';
+            searchField = "vocabValueRef";
+
+            switch (field.toLowerCase()) {
+                case "pos":
+                case "case":
+                case "degree":
+                case "gender":
+                case "mood":
+                case "number":
+                case "sentiment":
+                case "tense":
+                    searchValue = expandEntityValue(searchValue, field, true);
+                    break;
+                default:
+                    // NOTE: vocabValueRef for all fields!
+                    // throw new
+                    // SRUException(SRUConstants.SRU_UNSUPPORTED_COMBINATION_OF_RELATION_AND_INDEX,
+                    // "Queries with queryType 'lex' do not (yet) support '" + relation
+                    // + "' relation on field '" + field + "' at this FCS Endpoint.");
+            }
+
+            // getEscapedSearchTerm(sc.getSearchTerm(), true, true)
+            searchValue = Utils.escapeValue(searchValue);
+            searchValue = "\\\"" + searchValue + "\\\"";
+            searchValues = List.of(searchValue);
         } else {
-            throw new SRUException(SRUConstants.SRU_CANNOT_PROCESS_QUERY_REASON_UNKNOWN,
+            throw new SRUException(SRUConstants.SRU_UNSUPPORTED_RELATION,
                     "Queries with queryType 'lex' do not (yet) support '" + relation
                             + "' relations at this FCS Endpoint.");
         }
 
-        sb.append(' ');
-        sb.append(operator);
-        sb.append("value:");
-        sb.append(escapeSearchTerm(sc.getSearchTerm(), true));
+        for (String value : searchValues) {
+            sb.append(' ');
+            sb.append(operator);
+            sb.append(searchField);
+            sb.append(':');
+            sb.append(value);
+        }
 
         sb.append('"'); // v="
         sb.append("})"); // ({!parent
@@ -265,7 +351,7 @@ public class LexCQLToSolrConverter {
     private static String getEscapedSearchTerm(String value, boolean quote, boolean escapeQuote) {
         boolean requireEscaping = quote;
         // the value requires quoting if it contains certain characters
-        if (hasSpecialCharactersRequiringEscaping(value)) {
+        if (Utils.hasSpecialCharactersRequiringEscaping(value)) {
             requireEscaping = true;
         }
         // escape quotes and backslashes
@@ -279,45 +365,255 @@ public class LexCQLToSolrConverter {
         return value;
     }
 
-    private static String escapeSearchTerm(String value, boolean escapeAgain) {
-        // simply escape all special characters (no check required, only for efficiency?)
-        value = escapeValue(value);
-        if (escapeAgain) {
-            value = value.replace("\\", "\\\\");
+    private static String expandEntityValue(String value, String field, boolean strict) throws SRUException {
+        if (value.indexOf(':') == -1) {
+            // No protocol part, assume it is a abbreviated UD entity value
+
+            // normalize value spelling? (e.g. allow any case for UD?)
+            // maybe in combination with relation modifier /ignorecase
+
+            // check for known lex fields
+            switch (field.toLowerCase()) {
+                case "pos":
+                    switch (value) {
+                        case "ADJ":
+                        case "ADV":
+                        case "INTJ":
+                        case "NOUN":
+                        case "PROPN":
+                        case "VERB":
+                        case "ADP":
+                        case "AUX":
+                        case "CCONJ":
+                        case "DET":
+                        case "NUM":
+                        case "PART":
+                        case "PRON":
+                        case "SCONJ":
+                        case "PUNCT":
+                        case "SYM":
+                        case "X":
+                            value = "https://universaldependencies.org/u/pos/" + value;
+                            break;
+
+                        default:
+                            if (strict) {
+                                // TODO: unsure about this diagnostic
+                                throw new SRUException(SRUConstants.SRU_TERM_IN_INVALID_FORMAT_FOR_INDEX_OR_RELATION,
+                                        "Queries with queryType 'lex' do not support unknown value '" + value
+                                                + "' in field '" + field + "' at this FCS Endpoint.");
+                            }
+                            break;
+                    }
+                    break;
+
+                case "case":
+                    switch (value) {
+                        case "Abs":
+                        case "Acc":
+                        case "Erg":
+                        case "Nom":
+                        case "Abe":
+                        case "Ben":
+                        case "Cau":
+                        case "Cmp":
+                        case "Cns":
+                        case "Com":
+                        case "Dat":
+                        case "Dis":
+                        case "Equ":
+                        case "Gen":
+                        case "Ins":
+                        case "Par":
+                        case "Tem":
+                        case "Tra":
+                        case "Voc":
+                        case "Abl":
+                        case "Add":
+                        case "Ade":
+                        case "All":
+                        case "Del":
+                        case "Ela":
+                        case "Ess":
+                        case "Ill":
+                        case "Ine":
+                        case "Lat":
+                        case "Loc":
+                        case "Per":
+                        case "Sbe":
+                        case "Sbl":
+                        case "Spl":
+                        case "Sub":
+                        case "Sup":
+                        case "Ter":
+                            value = "https://universaldependencies.org/u/feat/Case#" + value;
+                            break;
+                        default:
+                            if (strict) {
+                                // TODO: unsure about this diagnostic
+                                throw new SRUException(SRUConstants.SRU_TERM_IN_INVALID_FORMAT_FOR_INDEX_OR_RELATION,
+                                        "Queries with queryType 'lex' do not support unknown value '" + value
+                                                + "' in field '" + field + "' at this FCS Endpoint.");
+                            }
+                            break;
+                    }
+                    break;
+
+                case "degree":
+                    switch (value) {
+                        case "Abs":
+                        case "Aug":
+                        case "Cmp":
+                        case "Dim":
+                        case "Equ":
+                        case "Pos":
+                        case "Sup":
+                            value = "https://universaldependencies.org/u/feat/Degree#" + value;
+                            break;
+                        default:
+                            if (strict) {
+                                // TODO: unsure about this diagnostic
+                                throw new SRUException(SRUConstants.SRU_TERM_IN_INVALID_FORMAT_FOR_INDEX_OR_RELATION,
+                                        "Queries with queryType 'lex' do not support unknown value '" + value
+                                                + "' in field '" + field + "' at this FCS Endpoint.");
+                            }
+                            break;
+                    }
+                    break;
+
+                case "gender":
+                    switch (value) {
+                        case "Com":
+                        case "Fem":
+                        case "Masc":
+                        case "Neut":
+                            value = "https://universaldependencies.org/u/feat/Gender#" + value;
+                            break;
+                        default:
+                            if (strict) {
+                                // TODO: unsure about this diagnostic
+                                throw new SRUException(SRUConstants.SRU_TERM_IN_INVALID_FORMAT_FOR_INDEX_OR_RELATION,
+                                        "Queries with queryType 'lex' do not support unknown value '" + value
+                                                + "' in field '" + field + "' at this FCS Endpoint.");
+                            }
+                            break;
+                    }
+                    break;
+
+                case "mood":
+                    switch (value) {
+                        case "Adm":
+                        case "Cnd":
+                        case "Des":
+                        case "Imp":
+                        case "Ind":
+                        case "Int":
+                        case "Irr":
+                        case "Jus":
+                        case "Nec":
+                        case "Opt":
+                        case "Pot":
+                        case "Prp":
+                        case "Qot":
+                        case "Sub":
+                            value = "https://universaldependencies.org/u/feat/Mood#" + value;
+                            break;
+                        default:
+                            if (strict) {
+                                // TODO: unsure about this diagnostic
+                                throw new SRUException(SRUConstants.SRU_TERM_IN_INVALID_FORMAT_FOR_INDEX_OR_RELATION,
+                                        "Queries with queryType 'lex' do not support unknown value '" + value
+                                                + "' in field '" + field + "' at this FCS Endpoint.");
+                            }
+                            break;
+                    }
+                    break;
+
+                case "number":
+                    switch (value) {
+                        case "Coll":
+                        case "Count":
+                        case "Dual":
+                        case "Grpa":
+                        case "Grpl":
+                        case "Inv":
+                        case "Pauc":
+                        case "Plur":
+                        case "Ptan":
+                        case "Sing":
+                        case "Tri":
+                            value = "https://universaldependencies.org/u/feat/Number#" + value;
+                            break;
+                        default:
+                            if (strict) {
+                                // TODO: unsure about this diagnostic
+                                throw new SRUException(SRUConstants.SRU_TERM_IN_INVALID_FORMAT_FOR_INDEX_OR_RELATION,
+                                        "Queries with queryType 'lex' do not support unknown value '" + value
+                                                + "' in field '" + field + "' at this FCS Endpoint.");
+                            }
+                            break;
+                    }
+                    break;
+
+                case "sentiment":
+                    switch (value) {
+                        case "Neg":
+                        case "Pos":
+                            value = "https://universaldependencies.org/u/feat/Sentiment#" + value;
+                            break;
+                        default:
+                            if (strict) {
+                                // TODO: unsure about this diagnostic
+                                throw new SRUException(SRUConstants.SRU_TERM_IN_INVALID_FORMAT_FOR_INDEX_OR_RELATION,
+                                        "Queries with queryType 'lex' do not support unknown value '" + value
+                                                + "' in field '" + field + "' at this FCS Endpoint.");
+                            }
+                            break;
+                    }
+                    break;
+
+                case "tense":
+                    switch (value) {
+                        case "Fut":
+                        case "Imp":
+                        case "Past":
+                        case "Pqp":
+                        case "Pres":
+                            value = "https://universaldependencies.org/u/feat/Tense#" + value;
+                            break;
+                        default:
+                            if (strict) {
+                                // TODO: unsure about this diagnostic
+                                throw new SRUException(SRUConstants.SRU_TERM_IN_INVALID_FORMAT_FOR_INDEX_OR_RELATION,
+                                        "Queries with queryType 'lex' do not support unknown value '" + value
+                                                + "' in field '" + field + "' at this FCS Endpoint.");
+                            }
+                            break;
+                    }
+                    break;
+
+                default:
+                    // TODO: hard fail or since unknown field, keep as is and ignore anything else?
+                    if (strict) {
+                        throw new SRUException(SRUConstants.SRU_UNSUPPORTED_COMBINATION_OF_RELATION_AND_INDEX,
+                                "Queries with queryType 'lex' do not support 'is' relation value expansion for '"
+                                        + field + "' field at this FCS Endpoint.");
+                    }
+                    break;
+            }
         }
-        return value;
-    }
 
-    private static boolean hasSpecialCharactersRequiringEscaping(String value) {
-        return (value.contains("\\")
-                || value.contains(" ")
-                || value.contains("=")
-                || value.contains("<")
-                || value.contains(">")
-                || value.contains(")")
-                || value.contains("(")
-                || value.contains("]")
-                || value.contains("[")
-                || value.contains("/")
-                || value.contains("\"")
-                || value.contains(":")
-                || value.contains("!"));
-                // works: &, <, >, |
-    }
+        // NOTE: UD specific behaviour: strip ".html" suffix
+        // (data indexed in solr needs to also have omitted this suffix!)
+        if (value.startsWith("https://universaldependencies.org/u/") && value.endsWith((".html"))) {
+            value = value.substring(0, value.length() - 5);
+        } else if (value.startsWith("https://universaldependencies.org/u/feat/") && value.contains(".html#")) {
+            int hashIdx = value.indexOf(".html#");
+            if (hashIdx > 40) {
+                value = value.substring(0, hashIdx) + value.substring(hashIdx + 5);
+            }
+        }
 
-    private static String escapeValue(String value) {
-        value = value.replace("\\", "\\\\");
-        value = value.replace(" ", "\\ ");
-        value = value.replace("=", "\\=");
-        value = value.replace("<", "\\<");
-        value = value.replace(">", "\\>");
-        value = value.replace(")", "\\)");
-        value = value.replace("(", "\\(");
-        value = value.replace("]", "\\]");
-        value = value.replace("[", "\\[");
-        value = value.replace("/", "\\/");
-        value = value.replace(":", "\\:");
-        value = value.replace("!", "\\!");
         return value;
     }
 

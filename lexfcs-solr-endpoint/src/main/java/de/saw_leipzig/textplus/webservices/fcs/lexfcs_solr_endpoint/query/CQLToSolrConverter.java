@@ -1,5 +1,9 @@
 package de.saw_leipzig.textplus.webservices.fcs.lexfcs_solr_endpoint.query;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.z3950.zing.cql.CQLAndNode;
@@ -38,18 +42,19 @@ public class CQLToSolrConverter {
             sb.append(' ');
             sb.append("v=\"");
             sb.append("+_type:value_*");
-            sb.append(' ');
-            sb.append("+value_text:");
-            sb.append("\\\""); // quotes for value_text:
 
-            String term = tn.getTerm();
-            term = term.replace("\\", "\\\\"); // escape backslashes
-            term = term.replace("\"", "\\\""); // escape quotes
-            term = term.replace("\\", "\\\\"); // escape backslashes again for nested v="" expression
-                                               // (I think, at least the quotes need to be escaped again!)
-            sb.append(term);
+            // split into whitespace tokens, see LexCQL `=`
+            final String searchValue = tn.getTerm();
+            final String[] tokens = Utils.tokenizeValue(searchValue);
+            final List<String> searchValues = Arrays.asList(tokens).stream()
+                    // TODO: double escape or not?
+                    .map(value -> Utils.escapeValue(value, true))
+                    .collect(Collectors.toList());
+            for (String value : searchValues) {
+                sb.append(" +value_text:");
+                sb.append(value);
+            }
 
-            sb.append("\\\""); // quotes for value_text:
             sb.append("\""); // v=
             sb.append("}"); // parent block query
         } else if (node instanceof CQLOrNode || node instanceof CQLAndNode) {
