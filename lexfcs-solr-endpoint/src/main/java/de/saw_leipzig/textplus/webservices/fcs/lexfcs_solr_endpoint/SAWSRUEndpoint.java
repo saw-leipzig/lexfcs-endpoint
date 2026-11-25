@@ -214,6 +214,17 @@ public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
         }
         LOGGER.info("Got root resource PIDs: {}", pids);
 
+        /* check if resource pids exist in Solr (core name) */
+        final Set<String> invalidPids = pids.stream().filter(pid -> {
+            final String coreName = solrCoreNameFromPid(pid);
+            LOGGER.debug("Check if Solr Core >> {} << (pid: {}) exists ...", coreName, pid);
+            return !searcher.hasCore(coreName);
+        }).collect(Collectors.toSet());
+        // NOTE: we will fail if there are issues (like missing cores)
+        if (!invalidPids.isEmpty()) {
+            throw new SRUConfigException("Missing Solr Cores for resources: " + invalidPids + "!");
+        }
+
         defaultCorpusId = getEnvParam("DEFAULT_RESOURCE_PID");
         LOGGER.info("Got defaultCorpusId resource PID: {}", defaultCorpusId);
         if (defaultCorpusId == null || !pids.contains(defaultCorpusId)) {
@@ -236,15 +247,7 @@ public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
         LOGGER.debug("Search restricted to first PID: {}", pid);
 
         /* get corpus/resource info from pid */
-        final String resourceName;
-        if (pid2name != null && pid2name.containsKey(pid)) {
-            resourceName = pid2name.get(pid);
-        } else {
-            // LOGGER.error("This branch should not be executed! PID={}", pid);
-            // throw new RuntimeException("Unexpected branching!");
-            // resourceName = pid.substring(RESOURCE_PREFIX.length());
-            resourceName = pid;
-        }
+        final String resourceName = solrCoreNameFromPid(pid);
 
         List<String> dataviews = parseDataViews(request, diagnostics, pid);
         LOGGER.debug("Search requested dataviews: {}", dataviews);
@@ -502,6 +505,22 @@ public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
             }
         }
         return allowedDataViews;
+    }
+
+    /**
+     * Derive the Solr core name from the resource PID.
+     * 
+     * @param pid the resource pid
+     * @return the Solr core name
+     */
+    protected String solrCoreNameFromPid(String pid) {
+        if (pid2name != null && pid2name.containsKey(pid)) {
+            return pid2name.get(pid);
+        }
+        if (pid.startsWith(RESOURCE_PREFIX)) {
+            return pid.substring(RESOURCE_PREFIX.length());
+        }
+        return pid;
     }
 
 }
