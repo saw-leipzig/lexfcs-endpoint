@@ -85,7 +85,7 @@ The basic structure for adding lexical entries is the following: (excerpt from e
            (in FCS results as <ResourceFragment pid="..." />) -->
       <field name="xmlId">https://en.wiktionary.org/wiki/leaf#Noun</field>
       <!-- the (default) language for the whole lexial entry -->
-      <field name="xmlLang">eng</field>
+      <field name="xmlLang">en</field>
       <!-- the langingpage/url to the lexial entry (at the home institution)
            (in FCS results as <ResourceFragment ref="..." />) -->
       <field name="landingpage">https://en.wiktionary.org/wiki/leaf</field>
@@ -132,7 +132,7 @@ Using the [LexFCS v0.3 specification](https://zenodo.org/records/15706299), the 
            (in FCS results as <ResourceFragment pid="..." />) -->
       <field name="xmlId"><!-- any PID whether URI/URN/..., prefixed etc. as long as unique for your resource --></field>
       <!-- the (default) language for the whole lexial entry -->
-      <field name="xmlLang"><!-- use a single ISO 639-3 language code --></field>
+      <field name="xmlLang"><!-- use a single BCP47 (or ISO 639-3) language code --></field>
       <!-- the langingpage/url to the lexial entry (at the home institution)
            (in FCS results as <ResourceFragment ref="..." />) -->
       <field name="landingpage"><!-- should be a URL --></field>
@@ -169,7 +169,7 @@ Using the [LexFCS v0.3 specification](https://zenodo.org/records/15706299), the 
             <field name="idRefs"><!-- valid XML id --></field>
 
             <!-- the language of the entry -->
-            <field name="xmlLang"><!-- use a single ISO 639-3 language code --></field>
+            <field name="xmlLang"><!-- use a single BCP47 (or ISO 639-3) language code --></field>
             <!-- additional language information using a URI to specify the @xmlLang attribute -->
             <field name="langUri"><!-- --></field>
             <!-- can only be set to "true", to mark this field value as preferred compared to other values for the same lexical field type; if not "true" then please do not provide this field (with any other value) -->
