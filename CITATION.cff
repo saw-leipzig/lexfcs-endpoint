@@ -7,6 +7,7 @@ authors:
   affiliation: "Saxon Academy of Sciences and Humanities in Leipzig"
   email: koerner@saw-leipzig.de
 title: "LexFCS Endpoint with Solr search engine"
-version: 1.1.0
+version: 2.0.0
 date-released: 2025-07-09
 url: "https://github.com/saw-leipzig/lexfcs-endpoint"
+repository-code: "https://github.com/saw-leipzig/lexfcs-endpoint"
