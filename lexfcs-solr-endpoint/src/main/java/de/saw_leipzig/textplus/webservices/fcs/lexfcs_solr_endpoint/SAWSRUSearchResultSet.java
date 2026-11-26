@@ -133,7 +133,13 @@ public class SAWSRUSearchResultSet extends SRUSearchResultSet {
         XMLStreamWriterHelper.writeStartResourceFragment(writer, result.xmlId, result.landingpage);
 
         if (request != null && request.isQueryType(Constants.FCS_QUERY_TYPE_LEX)) {
-            writeLexHitsDataview(writer, result);
+            if (result.dataview_lexhits != null) {
+                // only if available
+                writeLexHitsDataview(writer, result);
+            } else {
+                // otherwise default HITS Data View
+                writeHitsDataview(writer, result);
+            }
             writeLexDataview(writer, result);
         } else {
             writeHitsDataview(writer, result);

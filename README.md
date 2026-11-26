@@ -59,6 +59,7 @@ The example deployment uses `docker compose` for easy setup and encapsulation. P
 
    # lexical search
    curl 'http://localhost:8189/?query=*&queryType=lex&x-indent-response=2'
+   curl 'http://localhost:8189/?query=lemma%3D%22lion%22&queryType=lex'
    ```
 
 4. Stop (optional)

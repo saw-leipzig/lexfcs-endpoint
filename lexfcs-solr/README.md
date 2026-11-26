@@ -91,7 +91,8 @@ The basic structure for adding lexical entries is the following: (excerpt from e
       <field name="landingpage">https://en.wiktionary.org/wiki/leaf</field>
       <!-- response that will be returned for FCS BASIC search results for this lexical entry -->
       <field name="dataview_hits">leaf: 1. The usually green and flat organ that represents the most prominent feature of most vegetative plants. 2. A foliage leaf or any of the many and often considerably different structures it can specialise into. 3. Anything resembling the leaf of a plant.</field>
-      <!-- response that will be returned for FCS LEX search results for this lexical entry as LexHITS Data View -->
+      <!-- response that will be returned for FCS LEX search results for this lexical entry as LexHITS Data View
+           (optional, if not available, it will fall back to "dataview_hits" field and output a normal HITS Data View) -->
       <field name="dataview_lexhits">&lt;Hit kind="lex-lemma"&gt;leaf&lt;/Hit&gt;: &lt;Hit kind="lex-definition"&gt;The usually green and flat organ that represents the most prominent feature of most vegetative plants.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;A foliage leaf or any of the many and often considerably different structures it can specialise into.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;Anything resembling the leaf of a plant.&lt;/Hit&gt;</field>
 
       <!-- the actual fields and values of the lexical entry
