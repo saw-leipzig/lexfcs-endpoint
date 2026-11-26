@@ -26,10 +26,16 @@ docker run -it --rm -v "$PWD:/work" -w "/work" bash -- ./create-cores-from-templ
 
 # Startup
 _run_cmd "docker compose up -d"
+status=$?
+if [[ $status -ne 0 ]]; then
+    _warn "Unable to start Solr container?! Exit status=$status. Aborting!"
+fi
+
 
 # Load data into cores
-_head "Waiting for new cores coming up to import data..."
-sleep 15
+WAIT_TIME=15
+_head "Waiting $WAIT_TIME seconds for new cores to come up before importing data..."
+sleep $WAIT_TIME
 
 # ##########################################################################
 # Import data
@@ -53,11 +59,12 @@ for core in "${CORES[@]}"; do
     for xmlfile in "${SOLR_XMLS[@]}"; do
         _debug "Importing document '$xmlfile' ..."
         xmlfile="$(basename "$xmlfile")"
-        _run_cmd "docker run --rm -v "$PWD/$IMPORTDATA_DIR:/import_data" --network=host alpine/curl --user $SOLR_SETUP_USER:$SOLR_SETUP_PASS http://localhost:8983/solr/${core}/update?commit=true -H 'Content-Type: text/xml' --data-binary @/import_data/$core/$xmlfile"
+        _run_cmd "docker run --rm -v '$PWD/$IMPORTDATA_DIR:/import_data' --network=host alpine/curl --user '$SOLR_SETUP_USER:$SOLR_SETUP_PASS' 'http://localhost:8983/solr/${core}/update?commit=true' -H 'Content-Type: text/xml' --data-binary '@/import_data/$core/$xmlfile' --fail-with-body"
         status=$?
         if [[ $status -ne 0 ]]; then
             _warn "Failure to import file '$xmlfile' into core '$core' data! Exit status=$status. Aborting!"
             _info "Often times it is enough to just run the 'startup.sh' command again. The first time seems to fail after longer periods of runtime."
+            _info "Please check the log output for details."
             exit 1
         fi
     done
@@ -67,8 +74,8 @@ done
 # Downgrade auth
 # ##########################################################################
 _head "Update credentials for access..."
-_run_cmd "docker run --rm --network=host alpine/curl --silent --user $SOLR_SETUP_USER:$SOLR_SETUP_PASS http://localhost:8983/solr/admin/authentication -H 'Content-type:application/json' -d '{"set-user": {'"$SOLR_USER"': '"$SOLR_PASS"'}}'"
-_run_cmd "docker run --rm --network=host alpine/curl --silent --user $SOLR_SETUP_USER:$SOLR_SETUP_PASS http://localhost:8983/solr/admin/authorization -H 'Content-type:application/json' -d '{"set-permission": {"name": "read", "role": "read-only"}}'"
+_run_cmd "docker run --rm --network=host alpine/curl --silent --user '$SOLR_SETUP_USER:$SOLR_SETUP_PASS' 'http://localhost:8983/solr/admin/authentication' -H 'Content-type:application/json' -d '{"set-user": {'"$SOLR_USER"': '"$SOLR_PASS"'}}' --fail-with-body"
+_run_cmd "docker run --rm --network=host alpine/curl --silent --user '$SOLR_SETUP_USER:$SOLR_SETUP_PASS' 'http://localhost:8983/solr/admin/authorization' -H 'Content-type:application/json' -d '{"set-permission": {"name": "read", "role": "read-only"}}' --fail-with-body"
 # can also set to only "read-only" (read) instead of with "admin" (security-edit) role for more secure use
-_run_cmd "docker run --rm --network=host alpine/curl --silent --user $SOLR_SETUP_USER:$SOLR_SETUP_PASS http://localhost:8983/solr/admin/authorization -H 'Content-type:application/json' -d '{"set-user-role": {'"$SOLR_USER"': ["read-only", "admin"]}}'"
-_run_cmd "docker run --rm --network=host alpine/curl --silent --user $SOLR_SETUP_USER:$SOLR_SETUP_PASS http://localhost:8983/solr/admin/authentication -H 'Content-type:application/json' -d '{"delete-user": ['"$SOLR_SETUP_USER"']}'"
+_run_cmd "docker run --rm --network=host alpine/curl --silent --user '$SOLR_SETUP_USER:$SOLR_SETUP_PASS' 'http://localhost:8983/solr/admin/authorization' -H 'Content-type:application/json' -d '{"set-user-role": {'"$SOLR_USER"': ["read-only", "admin"]}}' --fail-with-body"
+_run_cmd "docker run --rm --network=host alpine/curl --silent --user '$SOLR_SETUP_USER:$SOLR_SETUP_PASS' 'http://localhost:8983/solr/admin/authentication' -H 'Content-type:application/json' -d '{"delete-user": ['"$SOLR_SETUP_USER"']}' --fail-with-body"
