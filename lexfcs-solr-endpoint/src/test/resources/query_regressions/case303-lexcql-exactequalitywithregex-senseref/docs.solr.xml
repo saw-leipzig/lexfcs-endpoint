@@ -1,0 +1,159 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case303:01</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">drive</field>
+        <field name="dataview_lexhits">drive</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case303:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">drive</field>
+            </doc>
+            <doc>
+                <field name="_type">value_senseRef</field>
+                <field name="value">pwn31:00104654-n</field>
+            </doc>
+        </field>
+    </doc>
+    <!-- different string -->
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case303:02</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">other</field>
+        <field name="dataview_lexhits">other</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case303:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">other</field>
+            </doc>
+            <doc>
+                <field name="_type">value_senseRef</field>
+                <field name="value">pwn31:00104654-s</field>
+            </doc>
+        </field>
+    </doc>
+    <!-- substring -->
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case303:03</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">other</field>
+        <field name="dataview_lexhits">other</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case303:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">other</field>
+            </doc>
+            <doc>
+                <field name="_type">value_senseRef</field>
+                <field name="value">pwn31:00104654</field>
+            </doc>
+        </field>
+    </doc>
+    <!-- other prefix -->
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case303:04</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">other</field>
+        <field name="dataview_lexhits">other</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case303:04</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">other</field>
+            </doc>
+            <doc>
+                <field name="_type">value_senseRef</field>
+                <field name="value">pwn30:00104654-n</field>
+            </doc>
+        </field>
+    </doc>
+    <!-- no prefix -->
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case303:05</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">other</field>
+        <field name="dataview_lexhits">other</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case303:05</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">other</field>
+            </doc>
+            <doc>
+                <field name="_type">value_senseRef</field>
+                <field name="value">00104654-n</field>
+            </doc>
+        </field>
+    </doc>
+    <!-- more string -->
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case303:06</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">other</field>
+        <field name="dataview_lexhits">other</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case303:06</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">other</field>
+            </doc>
+            <doc>
+                <field name="_type">value_senseRef</field>
+                <field name="value">pwn31:00104654-n2</field>
+            </doc>
+        </field>
+    </doc>
+    <!-- multiple senseRefs -->
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case303:07</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">drive</field>
+        <field name="dataview_lexhits">drive</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case303:07</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">drive</field>
+            </doc>
+            <doc>
+                <field name="_type">value_senseRef</field>
+                <field name="value">pwn31:00104654-n</field>
+            </doc>
+            <doc>
+                <field name="_type">value_senseRef</field>
+                <field name="value">pwn31:012345-n</field>
+            </doc>
+        </field>
+    </doc>
+</add>

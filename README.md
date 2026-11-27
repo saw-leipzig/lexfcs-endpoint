@@ -17,6 +17,8 @@ The example deployment uses `docker compose` for easy setup and encapsulation. P
    cd lexfcs-solr/
    # NOTE: please update the credentials
    cp credentials.sh.template credentials.sh
+   # NOTE: please update ports if necessary
+   cp docker-compose.override.yml.template docker-compose.override.yml
    # start and run in background
    ./startup.sh
    ```
@@ -27,6 +29,9 @@ The example deployment uses `docker compose` for easy setup and encapsulation. P
    cd lexfcs-solr-endpoint/
    # NOTE: please update the credentials ...
    cp .env.template .env
+   # NOTE: please update ports if necessary
+   # NOTE: the solr service port for `SOLR_URL` must match the port defined in lexfcs-solr/docker-compose.override.yml
+   cp docker-compose.override.yml.template docker-compose.override.yml
    # build endpoint
    docker compose build
    # start and run in background
@@ -54,6 +59,7 @@ The example deployment uses `docker compose` for easy setup and encapsulation. P
 
    # lexical search
    curl 'http://localhost:8189/?query=*&queryType=lex&x-indent-response=2'
+   curl 'http://localhost:8189/?query=lemma%3D%22lion%22&queryType=lex'
    ```
 
 4. Stop (optional)

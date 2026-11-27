@@ -1,0 +1,2 @@
+Should be the same files and folders as the `_base` solr core configuration for the `lexfcs-solr` part.
+Can be found at `lexfcs-solr/template_datadir/data/_base` (relative `../../../../../../lexfcs-solr/template_datadir/data/_base`).

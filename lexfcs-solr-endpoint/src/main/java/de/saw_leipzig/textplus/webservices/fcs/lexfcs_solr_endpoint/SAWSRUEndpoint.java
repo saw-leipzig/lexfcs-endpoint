@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,10 +35,12 @@ import eu.clarin.sru.server.fcs.Constants;
 import eu.clarin.sru.server.fcs.DataView;
 import eu.clarin.sru.server.fcs.EndpointDescription;
 import eu.clarin.sru.server.fcs.LexCQLQueryParser;
+import eu.clarin.sru.server.fcs.LexField;
 import eu.clarin.sru.server.fcs.ResourceInfo;
 import eu.clarin.sru.server.fcs.SimpleEndpointSearchEngineBase;
 import eu.clarin.sru.fcs.qlparser.QueryParserException;
 import eu.clarin.sru.server.fcs.utils.SimpleEndpointDescriptionParser;
+import jakarta.servlet.ServletContext;
 
 public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
     private static final Logger LOGGER = LogManager.getLogger(SAWSRUEndpoint.class);
@@ -214,6 +215,17 @@ public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
         }
         LOGGER.info("Got root resource PIDs: {}", pids);
 
+        /* check if resource pids exist in Solr (core name) */
+        final Set<String> invalidPids = pids.stream().filter(pid -> {
+            final String coreName = solrCoreNameFromPid(pid);
+            LOGGER.debug("Check if Solr Core >> {} << (pid: {}) exists ...", coreName, pid);
+            return !searcher.hasCore(coreName);
+        }).collect(Collectors.toSet());
+        // NOTE: we will fail if there are issues (like missing cores)
+        if (!invalidPids.isEmpty()) {
+            throw new SRUConfigException("Missing Solr Cores for resources: " + invalidPids + "!");
+        }
+
         defaultCorpusId = getEnvParam("DEFAULT_RESOURCE_PID");
         LOGGER.info("Got defaultCorpusId resource PID: {}", defaultCorpusId);
         if (defaultCorpusId == null || !pids.contains(defaultCorpusId)) {
@@ -236,21 +248,21 @@ public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
         LOGGER.debug("Search restricted to first PID: {}", pid);
 
         /* get corpus/resource info from pid */
-        final String resourceName;
-        if (pid2name != null && pid2name.containsKey(pid)) {
-            resourceName = pid2name.get(pid);
-        } else {
-            // LOGGER.error("This branch should not be executed! PID={}", pid);
-            // throw new RuntimeException("Unexpected branching!");
-            // resourceName = pid.substring(RESOURCE_PREFIX.length());
-            resourceName = pid;
-        }
+        final String resourceName = solrCoreNameFromPid(pid);
 
         List<String> dataviews = parseDataViews(request, diagnostics, pid);
         LOGGER.debug("Search requested dataviews: {}", dataviews);
 
+        List<String> filterLexFields = parseFilterLexFields(request, diagnostics, pid);
+        LOGGER.debug("Search requested lex fields filter: {}", filterLexFields);
+
         int startRecord = ((request.getStartRecord() < 1) ? 1 : request.getStartRecord()) - 1;
         int maximumRecords = request.getMaximumRecords();
+
+        if (!Searcher.isValidPagination(startRecord, maximumRecords)) {
+            // handle special case where start offset and limit is too large for Solr
+            throw new SRUException(SRUConstants.SRU_FIRST_RECORD_POSITION_OUT_OF_RANGE);
+        }
 
         SearchResultSet results = searcher.search(solrQuery, resourceName, startRecord, maximumRecords);
         if (results == null) {
@@ -259,7 +271,7 @@ public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
         // update back to real pid
         results.setPid(pid);
 
-        return new SAWSRUSearchResultSet(config, request, diagnostics, dataviews, results);
+        return new SAWSRUSearchResultSet(config, request, diagnostics, dataviews, filterLexFields, results);
     }
 
     // ---------------------------------------------------------------------
@@ -497,6 +509,113 @@ public class SAWSRUEndpoint extends SimpleEndpointSearchEngineBase {
             }
         }
         return allowedDataViews;
+    }
+
+    /**
+     * Extract and parse the to be filtered Lex Fields from the {@link SRURequest}.
+     * 
+     * Returns the list of Lex Field types if <code>x-fcs-lex-fields</code>
+     * parameter was used and is non-empty.
+     * 
+     * Validates the requested Lex Fields against the ones declared in the servlet's
+     * {@link EndpointDescription} for the resource identified by the value in
+     * <code>pid</code>. For each non-valid/undelcared Lex Field type generate a SRU
+     * diagnostic.
+     * 
+     * If the <code>queryType</code> is not <code>lex</code>, a non-fatal diagnostic
+     * will be created and the Lex Field list will be ignored and empty as it is
+     * non-applicable.
+     *
+     * @param request
+     *                    the {@link SRURequest} with request parameters
+     * @param diagnostics
+     *                    the {@link SRUDiagnosticList} object for storing
+     *                    non-fatal diagnostics
+     * @param pid
+     *                    resource PID String, to validate requested Lex Fields
+     * @return a list of String Lex Field types, may be empty
+     *
+     * @see #search(SRUServerConfig, SRURequest, SRUDiagnosticList)
+     */
+    protected List<String> parseFilterLexFields(SRURequest request, SRUDiagnosticList diagnostics, String pid)
+            throws SRUException {
+        if (request == null) {
+            return new ArrayList<>();
+        }
+
+        // check if Constants.X_FCS_LEX_FIELDS_KEY is set
+        boolean foundParam = false;
+        for (String erd : request.getExtraRequestDataNames()) {
+            if (Constants.X_FCS_LEX_FIELDS_KEY.equals(erd)) {
+                foundParam = true;
+                break;
+            }
+        }
+        if (!foundParam) {
+            return new ArrayList<>();
+        }
+
+        // handle if wrong query type
+        if (!request.isQueryType(Constants.FCS_QUERY_TYPE_LEX)) {
+            diagnostics.addDiagnostic(
+                    // TODO: maybe introduce a new (non-fatal) diagnostic
+                    // SRUConstants.SRU_UNSUPPORTED_PARAMETER,
+                    Constants.FCS_DIAGNOSTIC_GENERAL_PROCESSING_HINT,
+                    pid,
+                    "Parameter '" + Constants.X_FCS_LEX_FIELDS_KEY + "' for non-'lex' query type is not valid!");
+            return new ArrayList<>();
+        }
+
+        // extract parameter value and validate non-blank
+        String fields = request.getExtraRequestData(Constants.X_FCS_LEX_FIELDS_KEY);
+        if (fields.isBlank()) {
+            // XXX: handle case `?&x-fcs-lex-fields=` where no value is provided
+            // simply skip and ignore the parameter
+            // there is an "Unsupported parameter value" CQL diagnostic ...?
+            return new ArrayList<>();
+        }
+
+        // split into lex field type identifiers and also validate
+        List<String> filterLexFields = new ArrayList<>(
+                Arrays.asList(fields.split(Constants.X_FCS_LEX_FIELDS_SEPARATOR)));
+        if (filterLexFields.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Set<String> resourceLexFields = getResourceFromEndpointDescriptionByPID(endpointDescription, pid)
+                .getAvailableLexFields().stream()
+                .map(LexField::getType).collect(Collectors.toSet());
+
+        List<String> validFilterLexFields = new ArrayList<>();
+        for (String field : filterLexFields) {
+            if (!resourceLexFields.contains(field)) {
+                // keep only declared lex fields for this resource that can be returned
+                // TODO: do we have a better diagnostic? (CQL?)
+                diagnostics.addDiagnostic(
+                        Constants.FCS_DIAGNOSTIC_GENERAL_PROCESSING_HINT,
+                        pid,
+                        "Lexical Field with type '" + field + "' for resource PID='" + pid + "' is not valid!");
+            } else {
+                validFilterLexFields.add(field);
+            }
+        }
+        return validFilterLexFields;
+    }
+
+    /**
+     * Derive the Solr core name from the resource PID.
+     * 
+     * @param pid the resource pid
+     * @return the Solr core name
+     */
+    protected String solrCoreNameFromPid(String pid) {
+        if (pid2name != null && pid2name.containsKey(pid)) {
+            return pid2name.get(pid);
+        }
+        if (pid.startsWith(RESOURCE_PREFIX)) {
+            return pid.substring(RESOURCE_PREFIX.length());
+        }
+        return pid;
     }
 
 }

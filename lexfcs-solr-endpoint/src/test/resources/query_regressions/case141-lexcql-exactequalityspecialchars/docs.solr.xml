@@ -1,0 +1,36 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case141:01</field>
+        <field name="xmlLang">deu</field>
+        <field name="dataview_hits">Wege</field>
+        <field name="dataview_lexhits">Wege</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case141:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Wege</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case141:02</field>
+        <field name="xmlLang">deu</field>
+        <field name="dataview_hits">Wegelagerer greifen an</field>
+        <field name="dataview_lexhits">Wegelagerer greifen an</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case141:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">Wegelagerer greifen an</field>
+            </doc>
+        </field>
+    </doc>
+</add>

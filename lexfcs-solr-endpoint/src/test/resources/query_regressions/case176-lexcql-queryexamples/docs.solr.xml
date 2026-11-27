@@ -1,0 +1,69 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case176:01</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">motor vehicle</field>
+        <field name="dataview_lexhits">motor vehicle</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case176:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">motor vehicle</field>
+            </doc>
+            <doc>
+                <field name="_type">value_synonym</field>
+                <field name="value">car</field>
+            </doc>
+            <doc>
+                <field name="_type">value_synonym</field>
+                <field name="value">auto</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case176:02</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">wagon</field>
+        <field name="dataview_lexhits">wagon</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case176:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">wagon</field>
+            </doc>
+            <doc>
+                <field name="_type">value_synonym</field>
+                <field name="value">cart</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case176:03</field>
+        <field name="xmlLang">eng</field>
+        <field name="dataview_hits">wheel</field>
+        <field name="dataview_lexhits">wheel</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case176:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">wheel</field>
+            </doc>
+            <doc>
+                <field name="_type">value_holonym</field>
+                <field name="value">cart</field>
+            </doc>
+        </field>
+    </doc>
+</add>

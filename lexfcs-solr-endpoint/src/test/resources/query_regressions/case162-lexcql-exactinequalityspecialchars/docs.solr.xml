@@ -1,0 +1,87 @@
+<add>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case162:01</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">car</field>
+        <field name="dataview_lexhits">car</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case162:01</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">car</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case162:02</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">cars</field>
+        <field name="dataview_lexhits">cars</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case162:02</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">cars</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case162:03</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">card game</field>
+        <field name="dataview_lexhits">card game</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case162:03</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">card game</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case162:04</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">lucky card</field>
+        <field name="dataview_lexhits">lucky card</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case162:04</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">lucky card</field>
+            </doc>
+        </field>
+    </doc>
+    <doc>
+        <field name="_type">entry</field>
+        <field name="xmlId">test:case162:05</field>
+        <field name="xmlLang">en</field>
+        <field name="dataview_hits">red car</field>
+        <field name="dataview_lexhits">red car</field>
+        <field name="values">
+            <doc>
+                <field name="_type">value_entryId</field>
+                <field name="value">test:case162:05</field>
+            </doc>
+            <doc>
+                <field name="_type">value_lemma</field>
+                <field name="value">red car</field>
+            </doc>
+        </field>
+    </doc>
+</add>

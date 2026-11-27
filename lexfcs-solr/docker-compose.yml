@@ -1,4 +1,11 @@
 services:
   solr:
-    image: solr:9.1
+    image: solr:10.1
     container_name: fcs_solr
+    environment:
+      - SOLR_MODULES=scripting
+      #- VERBOSE=yes
+    command:
+      - solr-foreground
+      - --user-managed
+      - --verbose

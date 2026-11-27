@@ -8,16 +8,20 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.solr.client.api.model.CoreStatusResponse;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.Http2SolrClient;
+import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
+import org.apache.solr.client.solrj.SolrRequest.METHOD;
+import org.apache.solr.client.solrj.jetty.HttpJettySolrClient;
 import org.apache.solr.client.solrj.request.CoreAdminRequest;
 import org.apache.solr.client.solrj.response.CoreAdminResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.params.CoreAdminParams.CoreAdminAction;
+import org.apache.solr.common.params.CommonParams;
+import org.apache.solr.common.params.HighlightParams;
 import org.apache.solr.common.params.MapSolrParams;
-import org.apache.solr.common.util.NamedList;
 
 public class Searcher {
     private static final Logger LOGGER = LogManager.getLogger(Searcher.class);
@@ -25,34 +29,34 @@ public class Searcher {
     private SolrClient solrClient;
 
     public Searcher(String url, String user, String password) {
-        solrClient = new Http2SolrClient.Builder(url)
+        solrClient = new HttpJettySolrClient.Builder(url)
                 .withConnectionTimeout(10, TimeUnit.SECONDS)
+                // .withIdleTimeout(60, TimeUnit.SECONDS)
                 .withBasicAuthCredentials(user, password)
                 .build();
     }
 
     public boolean hasCore(String core) {
-        CoreAdminRequest request = new CoreAdminRequest();
+        CoreAdminRequest request = new CoreAdminRequest(METHOD.GET);
         request.setAction(CoreAdminAction.STATUS);
         try {
             CoreAdminResponse response = request.process(solrClient);
-            NamedList<Object> coreInfo = response.getCoreStatus(core);
+            CoreStatusResponse.SingleCoreData coreInfo = response.getCoreStatus(core);
             // TODO: getBeans() ?
             if (coreInfo == null) {
                 return false;
             }
 
-            LOGGER.debug("Index <{}> uptime: {}", core, coreInfo.get("uptime"));
-            LOGGER.debug("Index <{}> startTime: {}", core, coreInfo.get("startTime"));
+            LOGGER.debug("Index <{}> uptime: {}", core, coreInfo.uptime);
+            LOGGER.debug("Index <{}> startTime: {}", core, coreInfo.startTime);
 
-            @SuppressWarnings("unchecked")
-            NamedList<Object> indexInfo = (NamedList<Object>) coreInfo.get("index");
+            CoreStatusResponse.IndexDetails indexInfo = coreInfo.index;
             if (indexInfo != null) {
-                LOGGER.debug("Index <{}> numDocs: {}", core, indexInfo.get("numDocs"));
-                LOGGER.debug("Index <{}> version: {}", core, indexInfo.get("version"));
-                LOGGER.debug("Index <{}> lastModified: {}", core, indexInfo.get("lastModified"));
-                LOGGER.debug("Index <{}> sizeInBytes: {}", core, indexInfo.get("sizeInBytes"));
-                LOGGER.debug("Index <{}> size: {}", core, indexInfo.get("size"));
+                LOGGER.debug("Index <{}> numDocs: {}", core, indexInfo.numDocs);
+                LOGGER.debug("Index <{}> version: {}", core, indexInfo.version);
+                LOGGER.debug("Index <{}> lastModified: {}", core, indexInfo.lastModified);
+                LOGGER.debug("Index <{}> sizeInBytes: {}", core, indexInfo.sizeInBytes);
+                LOGGER.debug("Index <{}> size: {}", core, indexInfo.size);
             }
         } catch (SolrServerException | IOException e) {
             LOGGER.debug("Error requesting Core Status", e);
@@ -62,30 +66,38 @@ public class Searcher {
         return true;
     }
 
+    public static boolean isValidPagination(long offset, int limit) {
+        // if start offset is too large, solr will raise an
+        // {@code java.lang.NegativeArraySizeException}!
+        // seems to be a combination of offset + limit
+        // somewhat related to ArrayUtil.MAX_ARRAY_LENGTH but not completely?
+        // TODO: check negative params?
+        return Integer.MAX_VALUE >= (offset + limit);
+    }
+
     public SearchResultSet search(String query, String collection, long offset, int limit) {
-        @SuppressWarnings("serial")
         final MapSolrParams queryParams = new MapSolrParams(new HashMap<String, String>() {
             {
                 // https://solr.apache.org/guide/solr/latest/query-guide/standard-query-parser.html
-                put("q", query);
+                put(CommonParams.Q, query);
                 // put("q.op", "OR");
-                // put("df", "dataview_hits");
+                // put(CommonParams.DF, "dataview_hits");
 
                 // return child documents!
-                put("fl", "*,[child]");
+                put(CommonParams.FL, "*,[child]");
 
                 // pagination
                 // https://solr.apache.org/guide/solr/latest/query-guide/pagination-of-results.html
-                put("start", String.valueOf(offset)); // starts with 0
-                put("rows", String.valueOf(limit));
+                put(CommonParams.START, String.valueOf(offset)); // starts with 0
+                put(CommonParams.ROWS, String.valueOf(limit));
 
                 // highlighting
                 // https://solr.apache.org/guide/solr/latest/query-guide/highlighting.html
-                put("hl", "true");
-                put("hl.fl", "dataview_hits"); // only highlight on "dataview_hits"
-                put("hl.fragsize", "0"); // whole field
-                put("hl.simple.pre", "<Hit>"); // no prefix so that we can parse more easily
-                put("hl.simple.post", "</Hit>");
+                put(HighlightParams.HIGHLIGHT, "true");
+                put(HighlightParams.FIELDS, "dataview_hits"); // only highlight on "dataview_hits"
+                put(HighlightParams.FRAGSIZE, "0"); // whole field
+                put(HighlightParams.SIMPLE_PRE, "<Hit>"); // no prefix so that we can parse more easily
+                put(HighlightParams.SIMPLE_POST, "</Hit>");
             }
         });
 
@@ -102,7 +114,8 @@ public class Searcher {
                 if (entry.rawValues != null && !entry.rawValues.isEmpty()) {
                     entry.values = new ArrayList<FieldValue>(entry.rawValues.size());
                     for (SolrDocument childDoc : entry.rawValues) {
-                        FieldValue value = solrClient.getBinder().getBean(FieldValue.class, childDoc);
+                        // vanished: solrClient.getBinder().getBean()
+                        final FieldValue value = DocumentObjectBinder.INSTANCE.getBean(FieldValue.class, childDoc);
                         entry.values.add(value);
                     }
                     entry.rawValues = null;

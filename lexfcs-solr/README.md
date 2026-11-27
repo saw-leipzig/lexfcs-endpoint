@@ -9,6 +9,21 @@ One Solr Core represents a single lexical resource. Each lexical resource contai
 - Requires `docker` and `docker compose`.
 - Will use [**Solr 9.1**](https://solr.apache.org/guide/solr/9_1/index.html).
 
+## Run with docker compose
+
+```bash
+# copy example configuration
+cp docker-compose.override.yml.template docker-compose.override.yml
+```
+
+Pulling the image (no building required):
+
+```bash
+docker compose pull
+```
+
+**NOTE**: It is not recommended to run Solr directly via the `docker compose up` command but to use the custom [`startup.sh`](./startup.sh) script! It will automatically stop running instances, recreate cores and spin up a new instance.
+
 ## Setup
 
 The script `create-core-from-solr-defaults.sh` has been used to create a template Solr core configuration. It should not be necessary to use this script anymore except to create a new template in the future.
@@ -16,7 +31,7 @@ The Solr Core template is basically unchanged except the [`conf/managed-schema.x
 
 ## Core Creation
 
-The Solr Core template is stored in `template_datadir/data/_base/` and will be used for all Solr cores. New Core creation will use this `_base/` directory and copy all files and folders. Custom _overlays_ to overwrite files can be created for a core (e.g., [`test_wiktionary-en`](template_datadir/data/test_wiktionary-en/)) and will simply be copied over the base configuration. If no overrides are required, create an emty folder. Each folder will result in a Solr core.
+The Solr Core template is stored in `template_datadir/data/_base/` and will be used for all Solr cores. New Core creation will use this `_base/` directory and copy all files and folders. Custom _overlays_ to overwrite files can be created for a core (e.g., [`test_wiktionary-en`](template_datadir/data/test_wiktionary-en/)) and will simply be copied over the base configuration. If no overrides are required, create an empty folder. Each folder will result in a Solr core.
 
 See script [`create-cores-from-template.sh`](create-cores-from-template.sh) for details.
 
@@ -70,13 +85,14 @@ The basic structure for adding lexical entries is the following: (excerpt from e
            (in FCS results as <ResourceFragment pid="..." />) -->
       <field name="xmlId">https://en.wiktionary.org/wiki/leaf#Noun</field>
       <!-- the (default) language for the whole lexial entry -->
-      <field name="xmlLang">eng</field>
+      <field name="xmlLang">en</field>
       <!-- the langingpage/url to the lexial entry (at the home institution)
            (in FCS results as <ResourceFragment ref="..." />) -->
       <field name="landingpage">https://en.wiktionary.org/wiki/leaf</field>
       <!-- response that will be returned for FCS BASIC search results for this lexical entry -->
       <field name="dataview_hits">leaf: 1. The usually green and flat organ that represents the most prominent feature of most vegetative plants. 2. A foliage leaf or any of the many and often considerably different structures it can specialise into. 3. Anything resembling the leaf of a plant.</field>
-      <!-- response that will be returned for FCS LEX search results for this lexical entry as LexHITS Data View -->
+      <!-- response that will be returned for FCS LEX search results for this lexical entry as LexHITS Data View
+           (optional, if not available, it will fall back to "dataview_hits" field and output a normal HITS Data View) -->
       <field name="dataview_lexhits">&lt;Hit kind="lex-lemma"&gt;leaf&lt;/Hit&gt;: &lt;Hit kind="lex-definition"&gt;The usually green and flat organ that represents the most prominent feature of most vegetative plants.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;A foliage leaf or any of the many and often considerably different structures it can specialise into.&lt;/Hit&gt;, &lt;Hit kind="lex-definition"&gt;Anything resembling the leaf of a plant.&lt;/Hit&gt;</field>
 
       <!-- the actual fields and values of the lexical entry
@@ -117,7 +133,7 @@ Using the [LexFCS v0.3 specification](https://zenodo.org/records/15706299), the 
            (in FCS results as <ResourceFragment pid="..." />) -->
       <field name="xmlId"><!-- any PID whether URI/URN/..., prefixed etc. as long as unique for your resource --></field>
       <!-- the (default) language for the whole lexial entry -->
-      <field name="xmlLang"><!-- use a single ISO 639-3 language code --></field>
+      <field name="xmlLang"><!-- use a single BCP47 (or ISO 639-3) language code --></field>
       <!-- the langingpage/url to the lexial entry (at the home institution)
            (in FCS results as <ResourceFragment ref="..." />) -->
       <field name="landingpage"><!-- should be a URL --></field>
@@ -154,7 +170,7 @@ Using the [LexFCS v0.3 specification](https://zenodo.org/records/15706299), the 
             <field name="idRefs"><!-- valid XML id --></field>
 
             <!-- the language of the entry -->
-            <field name="xmlLang"><!-- use a single ISO 639-3 language code --></field>
+            <field name="xmlLang"><!-- use a single BCP47 (or ISO 639-3) language code --></field>
             <!-- additional language information using a URI to specify the @xmlLang attribute -->
             <field name="langUri"><!-- --></field>
             <!-- can only be set to "true", to mark this field value as preferred compared to other values for the same lexical field type; if not "true" then please do not provide this field (with any other value) -->

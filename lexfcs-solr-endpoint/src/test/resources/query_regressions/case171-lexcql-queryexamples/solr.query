@@ -1,0 +1,1 @@
+( ({!parent which="_type:entry" v="+_type:value_lemma +value:lead"}) AND ({!parent which="_type:entry" v="+_type:value_definition +value_text:river"}) )

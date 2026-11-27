@@ -2,8 +2,9 @@ services:
   solr:
     container_name: lexfcs-solr
     ports:
+      # format: [<public-ip-or-global-0.0.0.0>:]<public-port>:<internal-port>
       - "127.0.0.1:8983:8983"  # is only accessible via docker network
-      #- "0.0.0.0:8984:8983" # to make it accessible anywhere, for testing
+      #- "0.0.0.0:8984:8983" # to make it accessible anywhere, for testing, public via 8984 port
     networks:
       - lexfcs-solr-nw
     volumes:
